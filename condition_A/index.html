@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Condition A</title>
+  <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+</head>
+<body>
+  <a-scene>
+
+    <!-- Camera rig with controllers -->
+    <a-entity id="camera-rig" position="0 1.6 0">
+      <a-camera fov="100"></a-camera>
+
+      <!-- Right hand controller -->
+      <a-entity 
+        hand-controls="hand: right; handModelStyle: lowPoly; color: #FFCCCC"
+        laser-controls="hand: right">
+      </a-entity>
+
+      <!-- Left hand controller -->
+      <a-entity 
+        hand-controls="hand: left; handModelStyle: lowPoly; color: #CCCCFF"
+        laser-controls="hand: left">
+      </a-entity>
+    </a-entity>
+    
+    <!-- Sky -->
+    <a-sky></a-sky>
+    
+    <!-- to-scene2 button -->
+    <a-entity rotation="-90 0 0" id="bottom_arrow" position="4 1 -1" id="to_scene2" class="clickable"> 
+        <a-circle color="white" radius="0.9" material="opacity: 0.6; transparent: true"></a-circle> 
+        <a-plane src="./images/arrow_model2.png" width="1" height="1" transparent="true" position="0 0 0.01" material="shader: flat; opacity: 0.8; transparent: true"> 
+    </a-plane> </a-entity>
+
+  </a-scene>
+  
+  <script>
+    const sky = document.querySelector('a-sky');
+    const to_scene2 = document.getElementById('to_scene2');
+
+    const functions = {
+      scene1: function () {
+        sky.setAttribute('src', './images/1.png');
+      },
+      scene2: function () {
+        sky.setAttribute('src', './images/2.webp');
+      }
+    };
+
+    // Default to scene 1
+    functions.scene1();
+
+    // Add event listener for VR controller clicks
+    to_scene2.addEventListener('click', () => {
+      functions.scene2();
+    });
+  </script>
+</body>
+</html>
