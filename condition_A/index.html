@@ -11,7 +11,31 @@
 
     <!-- Camera rig with controllers -->
     <a-entity id="camera-rig" position="0 1.6 0">
-      <a-camera fov="100"></a-camera>
+      <a-camera fov="100">
+       <a-cursor 
+        raycaster="objects: .ray-target" 
+        fuse="false" 
+        material="opacity: 0; transparent: true">
+      </a-cursor>
+
+      </a-camera>
+
+       <!-- Plane (target for raycast) -->
+      <a-plane id="targetPlane" 
+          class="ray-target" 
+          color="tomato" 
+          width="2" 
+          height="2" 
+          position="0 1 -3">
+      </a-plane>
+
+      <!-- Text to display result -->
+      <a-text id="resultText" 
+        value="Look at the plane" 
+        position="0 2 -3" 
+        align="center" 
+        color="yellow">
+      </a-text>
 
       <!-- Right hand controller -->
       <a-entity 
@@ -26,6 +50,9 @@
       </a-entity>
     </a-entity>
     
+
+
+
     <!-- Sky -->
     <a-sky></a-sky>
     
@@ -56,6 +83,24 @@
     // Add event listener for VR controller clicks
     to_scene2.addEventListener('click', () => {
       functions.scene2();
+    });
+
+    
+  </script>
+
+  <script>
+
+    const object  = document.getElementById('targetPlane');
+    const text = document.getElementById('resultText');
+
+    // When ray enters plane
+    plane.addEventListener('mouseenter', () => {
+      text.setAttribute('value', '✅ Ray hit the plane!');
+    });
+
+    // When ray leaves plane
+    plane.addEventListener('mouseleave', () => {
+      text.setAttribute('value', 'Look at the plane');
     });
   </script>
 </body>
