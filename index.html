@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundscapes of Chettinad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #8c6d46;
+      --secondary-color: #c4a77d;
+      --accent-color: #d4b483;
+      --dark-bg: #1a1208;
+      --medium-bg: #2a2015;
+      --light-text: #f5f1eb;
+      --card-bg: rgba(196, 167, 125, 0.1);
+      --card-hover: rgba(196, 167, 125, 0.15);
+      --disabled: rgba(255, 255, 255, 0.2);
+      --success: #7a9c6c;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: var(--dark-bg);
+      color: var(--light-text);
+      font-family: "Inter", sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
+    #main_back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+      z-index: -1;
+      filter: sepia(30%) brightness(80%);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    header {
+      text-align: center;
+      padding: 20px 0;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: var(--light-text);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    
+    #sub_heading {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+      color: rgba(245, 241, 235, 0.7);
+      font-weight: 400;
+    }
+    
+    .content-area {
+      display: flex;
+      flex: 1;
+      gap: 30px;
+      padding: 20px 0;
+    }
+    
+    .group-section, .condition-section {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(196, 167, 125, 0.15);
+      transition: var(--transition);
+    }
+    
+    .group-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .condition-section {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(20px);
+      height: 0;
+      overflow: hidden;
+      padding: 0;
+    }
+    
+    .condition-section.active {
+      opacity: 1;
+      transform: translateY(0);
+      height: auto;
+      padding: 25px;
+    }
+    
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: var(--light-text);
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 35px;
+      height: 2px;
+      background: var(--accent-color);
+    }
+    
+    .groups-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      flex: 1;
+    }
+    
+    .conditions-path {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    
+    .path-step {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      opacity: 0.6;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .path-step:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+    
+    .path-step.active {
+      opacity: 1;
+      background: rgba(140, 109, 70, 0.2);
+      border: 1px solid var(--primary-color);
+      box-shadow: 0 4px 10px rgba(140, 109, 70, 0.15);
+    }
+    
+    .path-step.completed {
+      opacity: 1;
+      background: rgba(122, 156, 108, 0.15);
+    }
+    
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--secondary-color);
+      color: var(--dark-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    
+    .active .step-number {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .completed .step-number {
+      background: var(--success);
+      color: white;
+    }
+    
+    .step-content {
+      flex: 1;
+    }
+    
+    .step-title {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    
+    .step-action {
+      margin-left: auto;
+    }
+    
+    .action-btn {
+      background: var(--primary-color);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      padding: 7px 14px;
+      font-family: inherit;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .action-btn:hover {
+      background: #755a3a;
+      transform: translateY(-2px);
+    }
+    
+    .group-btn {
+      background: var(--card-bg);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      padding: 20px 12px;
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 120px;
+    }
+    
+    .group-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      background: var(--card-hover);
+    }
+    
+    .group-btn:active {
+      transform: translateY(1px);
+    }
+    
+    .group-btn.selected {
+      background: rgba(140, 109, 70, 0.25);
+      color: white;
+      font-weight: 600;
+      border: 1px solid var(--primary-color);
+    }
+    
+    .progress-container {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 18px;
+      text-align: center;
+    }
+    
+    .progress-text {
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+      border-radius: 8px;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    
+    .completion-message {
+      text-align: center;
+      margin-top: 20px;
+      padding: 18px;
+      background: rgba(122, 156, 108, 0.15);
+      border-radius: 10px;
+      display: none;
+      font-weight: 500;
+    }
+    
+    .group-icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+    
+    .group-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .content-area {
+        flex-direction: column;
+      }
+      
+      .groups-container {
+        grid-template-columns: 1fr;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      #sub_heading {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="./images/main_back.JPG" id="main_back" draggable="false">
+  
+  <div class="container">
+    <header>
+      <h1>Soundscapes of Chettinad</h1>
+      <p id="sub_heading">A Spatial-HRTF Comparative Study Exploring the Sonic Heritage of Tamil Nadu's Architectural Gem</p>
+    </header>
+    
+    <div class="content-area">
+      <section class="group-section" id="group-section">
+        <h2 class="section-title">Select Your Group</h2>
+        <div class="groups-container">
+          <button class="group-btn" data-group="1">
+            <div class="group-icon">①</div>
+            <div class="group-name">Group 1</div>
+          </button>
+          <button class="group-btn" data-group="2">
+            <div class="group-icon">②</div>
+            <div class="group-name">Group 2</div>
+          </button>
+          <button class="group-btn" data-group="3">
+            <div class="group-icon">③</div>
+            <div class="group-name">Group 3</div>
+          </button>
+          <button class="group-btn" data-group="4">
+            <div class="group-icon">④</div>
+            <div class="group-name">Group 4</div>
+          </button>
+        </div>
+      </section>
+      
+      <section class="condition-section" id="condition-section">
+        <h2 class="section-title">Your Experience Path</h2>
+        <div class="conditions-path" id="conditions-path">
+          <!-- This will be populated by JavaScript -->
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-text">Progress: <span id="progress-percent">0%</span></div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+        
+        <div class="completion-message" id="completion-message">
+          🎉 Congratulations! You've completed all conditions for this group.
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Define the condition patterns for each group
+      const groupPatterns = {
+        1: [
+          { id: 'A', title: 'Condition A' },
+          { id: 'B', title: 'Condition B' },
+          { id: 'C', title: 'Condition C' },
+          { id: 'D', title: 'Condition D' }
+        ],
+        2: [
+          { id: 'B', title: 'Condition B' },
+          { id: 'C', title: 'Condition C' },
+          { id: 'D', title: 'Condition D' },
+          { id: 'A', title: 'Condition A' }
+        ],
+        3: [
+          { id: 'C', title: 'Condition C' },
+          { id: 'D', title: 'Condition D' },
+          { id: 'A', title: 'Condition A' },
+          { id: 'B', title: 'Condition B' }
+        ],
+        4: [
+          { id: 'D', title: 'Condition D' },
+          { id: 'A', title: 'Condition A' },
+          { id: 'B', title: 'Condition B' },
+          { id: 'C', title: 'Condition C' }
+        ]
+      };
+      
+      let currentGroup = null;
+      let currentStep = 0;
+      let completedConditions = [];
+      
+      // Get DOM elements
+      const groupSection = document.getElementById('group-section');
+      const groupButtons = document.querySelectorAll('.group-btn');
+      const conditionSection = document.getElementById('condition-section');
+      const conditionsPath = document.getElementById('conditions-path');
+      const progressFill = document.getElementById('progress-fill');
+      const progressPercent = document.getElementById('progress-percent');
+      const completionMessage = document.getElementById('completion-message');
+      
+      // Add event listeners to group buttons
+      groupButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const groupId = this.getAttribute('data-group');
+          selectGroup(groupId);
+        });
+      });
+      
+      // Function to handle group selection
+      function selectGroup(groupId) {
+        // Set the current group
+        currentGroup = groupId;
+        
+        // Hide the group selection section
+        groupSection.style.display = 'none';
+        
+        // Show the condition section
+        conditionSection.classList.add('active');
+        
+        // Reset progress for the new group
+        currentStep = 0;
+        completedConditions = [];
+        
+        // Generate the path UI
+        generateConditionPath();
+        
+        // Reset progress bar
+        updateProgressBar();
+        
+        // Hide completion message
+        completionMessage.style.display = 'none';
+      }
+      
+      // Function to generate the condition path UI
+      function generateConditionPath() {
+        // Clear existing path
+        conditionsPath.innerHTML = '';
+        
+        // Get the pattern for the current group
+        const pattern = groupPatterns[currentGroup];
+        
+        // Create UI for each step
+        pattern.forEach((condition, index) => {
+          const stepElement = document.createElement('div');
+          stepElement.className = 'path-step';
+          stepElement.setAttribute('data-condition', condition.id);
+          
+          if (index === currentStep) {
+            stepElement.classList.add('active');
+          } else if (index < currentStep) {
+            stepElement.classList.add('completed');
+          }
+          
+          stepElement.innerHTML = `
+            <div class="step-number">${index + 1}</div>
+            <div class="step-content">
+              <div class="step-title">${condition.title}</div>
+            </div>
+            <div class="step-action">
+              ${index === currentStep ? 
+                `<button class="action-btn">Start</button>` : 
+                (index < currentStep ? '✅ Completed' : '🔒 Locked')
+              }
+            </div>
+          `;
+          
+          // Add click event to open Google.com for active conditions
+          if (index === currentStep) {
+            stepElement.addEventListener('click', function() {
+              // Open Google in a new tab
+              window.open('https://www.google.com', '_blank');
+              
+              // Complete the condition and unlock the next one
+              completeCondition(condition.id);
+            });
+          }
+          
+          conditionsPath.appendChild(stepElement);
+        });
+      }
+      
+      // Function to complete the current condition
+      function completeCondition(conditionId) {
+        // Add to completed conditions
+        completedConditions.push(conditionId);
+        
+        // Move to the next step
+        currentStep++;
+        
+        // Update the UI
+        generateConditionPath();
+        updateProgressBar();
+        
+        // Check if all conditions are completed
+        if (currentStep >= groupPatterns[currentGroup].length) {
+          completionMessage.style.display = 'block';
+        }
+      }
+      
+      // Function to update the progress bar
+      function updateProgressBar() {
+        const pattern = groupPatterns[currentGroup] || [];
+        const progress = (currentStep / pattern.length) * 100;
+        
+        progressFill.style.width = `${progress}%`;
+        progressPercent.textContent = `${Math.round(progress)}%`;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -21,7 +21,7 @@
       </a-camera>
 
        <!-- Plane (target for raycast) -->
-      <a-plane id="targetPlane" 
+      <a-plane id="left_pillar_plane" 
           class="ray-target" 
           color="tomato" 
           width="2" 
@@ -70,17 +70,16 @@
 
     const functions = {
       scene1: function () {
-        sky.setAttribute('src', './images/1.png');
+        sky.setAttribute('src', '../images/1.png');
       },
       scene2: function () {
-        sky.setAttribute('src', './images/2.webp');
+        sky.setAttribute('src', '../images/2.png');
       }
     };
 
     // Default to scene 1
     functions.scene1();
 
-    // Add event listener for VR controller clicks
     to_scene2.addEventListener('click', () => {
       functions.scene2();
     });
@@ -90,16 +89,16 @@
 
   <script>
 
-    const object  = document.getElementById('targetPlane');
+    const left_pillar_plane  = document.getElementById('left_pillar_plane');
     const text = document.getElementById('resultText');
 
     // When ray enters plane
-    plane.addEventListener('mouseenter', () => {
+    left_pillar_plane.addEventListener('mouseenter', () => {
       text.setAttribute('value', '✅ Ray hit the plane!');
     });
 
     // When ray leaves plane
-    plane.addEventListener('mouseleave', () => {
+    left_pillar_plane.addEventListener('mouseleave', () => {
       text.setAttribute('value', 'Look at the plane');
     });
   </script>
