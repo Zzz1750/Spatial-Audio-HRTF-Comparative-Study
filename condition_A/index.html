@@ -37,20 +37,42 @@
       
     
     
-  <!-- Plane (target for raycast) -->
+  <!-- Left Pillar Plane (target for raycast) -->
     <a-plane id="left_pillar_plane" 
         class="ray-target" 
         color="tomato" 
-        width="0.2" 
-        height="0.2" 
-        position="0 1 -3"
-        rotation="0 30 0">
+        width="2" 
+        height="12" 
+        position="-6.2 5 -4"
+        rotation="0 60 0"
+        opacity= '0.8'
+        transparent = 'true'>
+    </a-plane>
+
+    <!-- Elephant Plane (target for raycast) -->
+    <a-plane id="elephantt_pillar_plane" 
+        class="ray-target" 
+        color="yellow" 
+        width="2" 
+        height="2" 
+        position="5.5 1.8 -10"
+        rotation="0 0 0"
+        opacity= '0.8'
+        transparent = 'true'>
     </a-plane>
 
       <!-- Text to display result -->
-      <a-text id="resultText" 
+      <a-text id="pillar_text" 
         value="L" 
         position="0 2 -3" 
+        align="center" 
+        color="yellow">
+      </a-text>
+      
+      <!-- Text to display result -->
+      <a-text id="elephant_text" 
+        value="L" 
+        position="2 3 -3" 
         align="center" 
         color="yellow">
       </a-text>
@@ -100,18 +122,29 @@
   </script>
 
   <script>
-
     const left_pillar_plane  = document.getElementById('left_pillar_plane');
-    const text = document.getElementById('resultText');
+    const elephantt_pillar_plane  = document.getElementById('elephantt_pillar_plane');
+
+    const pillar_text = document.getElementById('pillar_text');
 
     // When ray enters plane
     left_pillar_plane.addEventListener('mouseenter', () => {
-      text.setAttribute('value', '✅ Ray hit the plane!');
+      pillar_text.setAttribute('value', '✅ Ray hit the plane!');
     });
 
     // When ray leaves plane
     left_pillar_plane.addEventListener('mouseleave', () => {
-      text.setAttribute('value', 'L');
+      pillar_text.setAttribute('value', 'L');
+    });
+
+     // When ray enters plane
+    elephantt_pillar_plane.addEventListener('mouseenter', () => {
+      elephant_text.setAttribute('value', '✅ Ray hit the plane!');
+    });
+
+    // When ray leaves plane
+    elephantt_pillar_plane.addEventListener('mouseleave', () => {
+      elephant_text.setAttribute('value', 'L');
     });
   </script>
 </body>
