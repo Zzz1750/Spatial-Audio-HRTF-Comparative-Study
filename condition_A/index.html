@@ -10,7 +10,7 @@
   <a-scene scale="0.2 0.2 0.2">
 
     <!-- Camera rig -->
-    <a-entity id="camera-rig" position="0 -1 0" rotation="0 90 0">
+    <a-entity id="camera-rig" position="0 -3 0" rotation="0 90 0">
       <a-camera fov="90">
        <a-cursor 
         raycaster="objects: .ray-target" 
@@ -111,7 +111,7 @@
 
     // When ray leaves plane
     left_pillar_plane.addEventListener('mouseleave', () => {
-      text.setAttribute('value', 'Look at the plane');
+      text.setAttribute('value', 'L');
     });
   </script>
 </body>
