@@ -10,7 +10,7 @@
   <a-scene scale="0.2 0.2 0.2">
 
     <!-- Camera rig -->
-    <a-entity id="camera-rig" position="0 -2 0" rotation="0 90 0">
+    <a-entity id="camera-rig" position="0 0 0" rotation="0 90 0">
       <a-camera fov="90">
        <a-cursor 
         raycaster="objects: .ray-target" 
@@ -41,15 +41,15 @@
     <a-plane id="left_pillar_plane" 
         class="ray-target" 
         color="tomato" 
-        width="2" 
-        height="2" 
+        width="0.2" 
+        height="0.2" 
         position="0 1 -3"
         rotation="0 30 0">
     </a-plane>
 
       <!-- Text to display result -->
       <a-text id="resultText" 
-        value="Look at the plane" 
+        value="L" 
         position="0 2 -3" 
         align="center" 
         color="yellow">
