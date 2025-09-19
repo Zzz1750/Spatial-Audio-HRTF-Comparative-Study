@@ -8,30 +8,35 @@
 </head>
 <body>
   <a-scene>
+    <!-- Camera rig -->
     <a-entity id="camera-rig" position="0 -3 0" rotation="0 90 0">
       <a-camera fov="90"></a-camera>
     </a-entity>
 
+    <!-- Background -->
     <a-sky src="./images/1.webp"></a-sky>
 
-    <!-- Invisible play trigger plane -->
+    <!-- Audio entity with positional audio -->
+    <a-entity id="binaural-audio"
+      sound="src: url(./audio/binaural.wav); autoplay: false; loop: true; positional: true"
+      position="0 0 0">
+    </a-entity>
+
+    <!-- Clickable Plane -->
     <a-plane id="play-plane"
       position="0 1.6 -3"
       width="2" height="1"
       color="#333"
-      text="value: ▶ Play Binaural; align: center; color: white; width: 4">
+      text="value: ▶ Play Audio; align: center; color: white; width: 4">
     </a-plane>
   </a-scene>
-
-  <!-- Plain HTML audio (not attached to camera) -->
-  <audio id="binaural-audio" src="./audio/binaural.wav" loop></audio>
 
   <script>
     const playPlane = document.querySelector('#play-plane');
     const audioEl = document.querySelector('#binaural-audio');
 
     playPlane.addEventListener('click', () => {
-      audioEl.play(); // play raw binaural audio
+      audioEl.components.sound.playSound();
       playPlane.setAttribute('visible', false);
     });
   </script>
