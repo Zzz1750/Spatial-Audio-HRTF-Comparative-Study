@@ -64,13 +64,24 @@
 
     <!-- Intro -->
     <a-text id="intro_text" 
-      value="Welcome to the Experience" 
+      value="Immersive Audio - Comparative Analysis" 
       position="0 3 -5" 
       align="center" 
-      width="10"
+      width="7"
       color="white"
       visible="false">
     </a-text>
+
+    <a-plane 
+      id="wait_logo"
+      src="../images/icon/3d_logo.jpg" 
+      position="0 2 -5" 
+      width="3" 
+      height="3"
+      rotation="0 0 0"
+      visible="false">
+    </a-plane>
+
 
     <a-text id="intro_text2" 
       value="Start when you are ready " 
@@ -80,7 +91,7 @@
       visible="false">
     </a-text>
 
-    <a-entity id="start_scene1" position="0 1.8 -5" visible="false">
+    <a-entity id="start_scene1" position="0 2.1 -5" visible="false">
       <a-plane 
         id="intro_plane"
         color="white" 
@@ -182,6 +193,7 @@
     scene.setAttribute('visible','true')
     if (scene) {
       scene.enterVR();
+      functions.wait_time_vr();
     }
   });
   </script>
@@ -194,24 +206,32 @@
     const intro_text2 = document.getElementById('intro_text2');
     const start_scene1 = document.getElementById('start_scene1');
     const intro_plane = document.getElementById('intro_plane');
+    const wait_logo = document.getElementById('wait_logo');
+
     var intro_ready = 0;
 
     const functions = {
       wait_time_vr: function () {
-        setTimeout(functions.scene1, 4000);
+        sky.setAttribute('src', '../images/wait_vr.webp');
+        wait_logo.setAttribute('visible','true')
+        setTimeout(functions.scene1, 9000);
       },
       scene1: function () {
-        sky.setAttribute('src', '../images/intro.jpg');
-        intro_text.setAttribute('visible','true')
-        intro_text2.setAttribute('visible','true')
-        start_scene1.setAttribute('visible','true')
-        fake_loading_intro();
+        sky.setAttribute('src', '../images/intro.webp');
+        wait_logo.setAttribute('visible','false')
 
+        setTimeout(()=>{
+          intro_text.setAttribute('visible','true')
+        },1000)
 
+        setTimeout(()=>{
+          intro_text2.setAttribute('visible','true')
+          start_scene1.setAttribute('visible','true')
+          fake_loading_intro();        
+        },5000)
+      
       /*planes we need */
       intro_plane.classList.add('clickable');
-
-
 
       },
       scene2: function () {
@@ -221,9 +241,6 @@
         start_scene1.setAttribute('visible','false')
       }
     };
-
-    // Default to wait_time_vr
-    functions.wait_time_vr();
 
     start_scene1.addEventListener('click',()=>{
       if(intro_ready == 1){
