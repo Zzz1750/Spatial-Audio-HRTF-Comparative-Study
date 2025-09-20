@@ -37,11 +37,12 @@
     <!-- Camera rig -->
     <a-entity id="camera-rig" position="0 -3 0" rotation="0 90 0">
       <a-camera fov="90">
-       <a-cursor 
-        raycaster="objects: .ray-target" 
-        fuse="false" 
-        material="opacity: 0; transparent: true">
+       <a-cursor
+          raycaster="objects: .ray-target"
+          fuse="false"
+          material="color: transparent; opacity: 0; transparent: true">
       </a-cursor>
+
 
       </a-camera>
 
@@ -81,7 +82,7 @@
 
     <a-entity id="start_scene1" position="0 1.8 -5" visible="false">
       <a-plane 
-        class="clickable" 
+        id="intro_plane"
         color="white" 
         width="1.5" 
         height="0.5" 
@@ -90,8 +91,9 @@
         material="shader: flat"
       ></a-plane>
 
-      <a-text 
-        value="START" 
+      <a-text
+        id="fake_loader" 
+        value="" 
         align="center" 
         color="black" 
         position="0 0 0.01" 
@@ -153,15 +155,17 @@
 
   <!-- Sky -->
   <a-sky radius="20"></a-sky>
-    
-  <a-entity rotation="-90 0 0" position="4 1 -1" id="to_scene2"> 
+  
+
+
+  <!-- <a-entity rotation="-90 0 0" position="4 1 -1" id="to_scene2"> 
   <a-circle class="clickable" color="white" radius="0.9" 
     material="opacity: 0.6; transparent: true"></a-circle> 
   <a-plane class="clickable" src="../images/arrow_model2.png" 
     width="1" height="1" transparent="true" 
     position="0 0 0.01" 
     material="shader: flat; opacity: 0.8; transparent: true"> 
-  </a-plane> 
+  </a-plane>  -->
 </a-entity>
 
   </a-scene>
@@ -189,18 +193,24 @@
     const intro_text = document.getElementById('intro_text');
     const intro_text2 = document.getElementById('intro_text2');
     const start_scene1 = document.getElementById('start_scene1');
-
+    const intro_plane = document.getElementById('intro_plane');
 
     const functions = {
       wait_time_vr: function () {
-        sky.setAttribute('src', '../images/4.png');
-        setTimeout(functions.scene1, 5000);
+        setTimeout(functions.scene1, 4000);
       },
       scene1: function () {
         sky.setAttribute('src', '../images/intro.jpg');
         intro_text.setAttribute('visible','true')
         intro_text2.setAttribute('visible','true')
         start_scene1.setAttribute('visible','true')
+        fake_loading_intro();
+
+
+      /*planes we need */
+      intro_plane.classList.add('clickable');
+
+
       },
       scene2: function () {
         sky.setAttribute('src', '../images/1.webp');
@@ -219,6 +229,23 @@
     })
 
     
+    function fake_loading_intro() {
+      const fake_loader = document.getElementById('fake_loader');
+      fake_loader.setAttribute('value', 'Loading');
+
+      setTimeout(() => {
+        fake_loader.setAttribute('value', 'Loading.');
+      }, 2000);
+
+      setTimeout(() => {
+        fake_loader.setAttribute('value', 'Loading..');
+      }, 4000);
+
+      setTimeout(() => {
+        fake_loader.setAttribute('value', 'Loading...');
+      }, 6000);
+    }
+
   </script>
 
  <script>
