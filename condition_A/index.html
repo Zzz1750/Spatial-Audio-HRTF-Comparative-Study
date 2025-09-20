@@ -79,7 +79,7 @@
       visible="false">
     </a-text>
 
-    <a-entity id="start_scene1" position="0 1.8 -5">
+    <a-entity id="start_scene1" position="0 1.8 -5" visible="false">
       <a-plane 
         class="clickable" 
         color="white" 
@@ -192,6 +192,10 @@
 
 
     const functions = {
+      wait_time_vr: function () {
+        sky.setAttribute('src', '../images/4.png');
+        setTimeout(functions.scene1, 5000);
+      },
       scene1: function () {
         sky.setAttribute('src', '../images/intro.jpg');
         intro_text.setAttribute('visible','true')
@@ -206,8 +210,8 @@
       }
     };
 
-    // Default to scene 1
-    functions.scene1();
+    // Default to wait_time_vr
+    functions.wait_time_vr();
 
     start_scene1.addEventListener('click',()=>{
       document.getElementById('intro_audio').pause();
