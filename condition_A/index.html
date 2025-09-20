@@ -6,8 +6,33 @@
   <title>Condition A</title>
   <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
 </head>
+<style>
+  body{
+    margin: 0;
+    background-color: black;
+  }
+
+  #enter-vr-btn{
+    position:absolute; 
+    z-index:9; 
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+</style>
 <body>
-  <a-scene scale="0.2 0.2 0.2">
+   <button id="enter-vr-btn">
+    GO VR
+  </button>
+
+  <audio id="intro_audio" src="../audio/intro_new.mp3"></audio>
+
+  <a-scene id="scene" scale="0.2 0.2 0.2" vr-mode-ui="enabled: false" xr-mode-ui="enabled: false" visible="false">
 
     <!-- Camera rig -->
     <a-entity id="camera-rig" position="0 -3 0" rotation="0 90 0">
@@ -35,7 +60,45 @@
       cursor="fuse: false">
     </a-entity>
       
-    
+
+    <!-- Intro -->
+    <a-text id="intro_text" 
+      value="Welcome to the Experience" 
+      position="0 2.3 -3" 
+      align="center" 
+      color="white"
+      visible="false">
+    </a-text>
+
+    <a-text id="intro_text2" 
+      value="Start when you are ready " 
+      position="0 3.5 -5" 
+      align="center" 
+      color="white"
+      visible="false">
+    </a-text>
+
+    <a-entity id="start_scene1" position="0 1.8 -3">
+      <a-plane 
+        class="clickable" 
+        color="white" 
+        width="1" 
+        height="0.4" 
+        opacity="0.8" 
+        transparent="true"
+        material="shader: flat"
+      ></a-plane>
+
+      <a-text 
+        value="START" 
+        align="center" 
+        color="black" 
+        position="0 0 0.01" 
+        width="3"
+      ></a-text>
+    </a-entity>
+
+
     
   <!-- Left Pillar Plane (target for raycast) -->
     <a-plane id="left_pillar_plane" 
@@ -46,7 +109,8 @@
         position="-6.2 5 -4"
         rotation="0 60 0"
         opacity= '0.8'
-        transparent = 'true'>
+        transparent = 'true'
+        visible="false">
     </a-plane>
 
     <!-- Elephant Plane (target for raycast) -->
@@ -58,7 +122,8 @@
         position="5.5 1.8 -10"
         rotation="0 0 0"
         opacity= '0.8'
-        transparent = 'true'>
+        transparent = 'true'
+        visible="false">
     </a-plane>
 
       <!-- Text to display result -->
@@ -66,7 +131,8 @@
         value="Pillar Data " 
         position="0 2 -3" 
         align="center" 
-        color="yellow">
+        color="yellow"
+        visible="false">
       </a-text>
       
       <!-- Text to display result -->
@@ -74,7 +140,8 @@
         value="Elephant Data" 
         position="2 3 -3" 
         align="center" 
-        color="yellow">
+        color="yellow"
+        visible="false">
       </a-text>
 
      
@@ -83,8 +150,8 @@
 
 
 
-    <!-- Sky -->
-    <a-sky radius="20"></a-sky>
+  <!-- Sky -->
+  <a-sky radius="20"></a-sky>
     
   <a-entity rotation="-90 0 0" position="4 1 -1" id="to_scene2"> 
   <a-circle class="clickable" color="white" radius="0.9" 
@@ -98,25 +165,53 @@
 
   </a-scene>
   
+  <!-- Enter VR -->
+  <script>
+    const enter_vr_btn = document.getElementById("enter-vr-btn")
+    const scene = document.querySelector("a-scene");
+    const intro_audio = document.getElementById('intro_audio');
+
+    enter_vr_btn.addEventListener("click", function () {
+    enter_vr_btn.style.display='none';
+    intro_audio.play();
+    scene.setAttribute('visible','true')
+    if (scene) {
+      scene.enterVR();
+    }
+  });
+  </script>
+
+
   <script>
     const sky = document.querySelector('a-sky');
     const to_scene2 = document.getElementById('to_scene2');
+    const intro_text = document.getElementById('intro_text');
+    const intro_text2 = document.getElementById('intro_text2');
+    const start_scene1 = document.getElementById('start_scene1');
+
 
     const functions = {
       scene1: function () {
-        sky.setAttribute('src', '../images/1.webp');
+        sky.setAttribute('src', '../images/intro.jpg');
+        intro_text.setAttribute('visible','true')
+        intro_text2.setAttribute('visible','true')
+        start_scene1.setAttribute('visible','true')
       },
       scene2: function () {
-        sky.setAttribute('src', '../images/2.webp');
+        sky.setAttribute('src', '../images/1.webp');
+        intro_text.setAttribute('visible','false')
+        intro_text2.setAttribute('visible','false')
+        start_scene1.setAttribute('visible','false')
       }
     };
 
     // Default to scene 1
     functions.scene1();
 
-    to_scene2.addEventListener('click', () => {
+    start_scene1.addEventListener('click',()=>{
+      document.getElementById('intro_audio').pause();
       functions.scene2();
-    });
+    })
 
     
   </script>
@@ -127,41 +222,42 @@
     elephant: { time: 0 }
   };
 
-  let timer;
+  let startTime = null;
 
-  function gaze_calculator_enter(dataObj, property) {
-    timer = setInterval(() => {
-      dataObj[property]++;
-    }, 1000);
+  function gaze_calculator_enter() {
+    startTime = Date.now();
   }
 
-  function gaze_calculator_exit() {
-    clearInterval(timer);
+  function gaze_calculator_exit(dataObj, property, textEl) {
+    if (startTime) {
+      const duration = Date.now() - startTime;
+      dataObj[property] += duration;
+      startTime = null;
+      textEl.setAttribute('value', `Time: ${(dataObj[property] / 1000).toFixed(3)}s`);
+    }
   }
 
   const pillar_text = document.getElementById('pillar_text');
   const elephant_text = document.getElementById('elephant_text');
 
-
   const left_pillar_plane = document.getElementById('left_pillar_plane');
   const elephant_plane = document.getElementById('elephantt_pillar_plane');
 
   left_pillar_plane.addEventListener('mouseenter', () => {
-    gaze_calculator_enter(gazeData.leftPillar, 'time');
+    gaze_calculator_enter();
   });
   left_pillar_plane.addEventListener('mouseleave', () => {
-    gaze_calculator_exit();
-    pillar_text.setAttribute('value',`Time : ${gazeData.leftPillar.time}s`)
+    gaze_calculator_exit(gazeData.leftPillar, 'time', pillar_text);
   });
 
   elephant_plane.addEventListener('mouseenter', () => {
-    gaze_calculator_enter(gazeData.elephant, 'time');
+    gaze_calculator_enter();
   });
   elephant_plane.addEventListener('mouseleave', () => {
-    gaze_calculator_exit();
-    elephant_text.setAttribute('value',`Time : ${gazeData.elephant.time}s`)
+    gaze_calculator_exit(gazeData.elephant, 'time', elephant_text);
   });
 </script>
+
 
 
 </body>
