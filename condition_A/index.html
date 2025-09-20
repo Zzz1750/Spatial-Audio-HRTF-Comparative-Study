@@ -32,7 +32,7 @@
 
   <audio id="intro_audio" src="../audio/intro_new.mp3"></audio>
 
-  <a-scene id="scene" scale="0.2 0.2 0.2" vr-mode-ui="enabled: false" xr-mode-ui="enabled: false" visible="false">
+  <a-scene id="scene" vr-mode-ui="enabled: false" xr-mode-ui="enabled: false" visible="false">
 
     <!-- Camera rig -->
     <a-entity id="camera-rig" position="0 -3 0" rotation="0 90 0">
@@ -40,9 +40,9 @@
        <a-cursor
           raycaster="objects: .ray-target"
           fuse="false"
-          material="color: transparent; opacity: 0; transparent: true">
+          geometry="primitive: ring; radiusInner: 0; radiusOuter: 0"
+          material="opacity: 0; transparent: true">
       </a-cursor>
-
 
       </a-camera>
 
@@ -194,6 +194,7 @@
     const intro_text2 = document.getElementById('intro_text2');
     const start_scene1 = document.getElementById('start_scene1');
     const intro_plane = document.getElementById('intro_plane');
+    var intro_ready = 0;
 
     const functions = {
       wait_time_vr: function () {
@@ -211,6 +212,7 @@
       intro_plane.classList.add('clickable');
 
 
+
       },
       scene2: function () {
         sky.setAttribute('src', '../images/1.webp');
@@ -224,25 +226,28 @@
     functions.wait_time_vr();
 
     start_scene1.addEventListener('click',()=>{
-      document.getElementById('intro_audio').pause();
-      functions.scene2();
+      if(intro_ready == 1){
+        document.getElementById('intro_audio').pause();
+        functions.scene2();
+      }
     })
 
     
     function fake_loading_intro() {
       const fake_loader = document.getElementById('fake_loader');
-      fake_loader.setAttribute('value', 'Loading');
+      fake_loader.setAttribute('value', 'wait 3s');
 
       setTimeout(() => {
-        fake_loader.setAttribute('value', 'Loading.');
+        fake_loader.setAttribute('value', 'wait 2s');
       }, 2000);
 
       setTimeout(() => {
-        fake_loader.setAttribute('value', 'Loading..');
+        fake_loader.setAttribute('value', 'wait 1s');
       }, 4000);
-
+       
       setTimeout(() => {
-        fake_loader.setAttribute('value', 'Loading...');
+        fake_loader.setAttribute('value', 'START');
+        intro_ready=1;
       }, 6000);
     }
 
