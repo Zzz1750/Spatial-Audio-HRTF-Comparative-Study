@@ -122,7 +122,7 @@
         width="2" 
         height="12" 
         position="-6.2 5 -4"
-        rotation="0 60 0"
+        rotation="10 60 0"
         opacity= '0.8'
         transparent = 'true'
         visible="false">
@@ -158,10 +158,17 @@
         color="yellow"
         visible="false">
       </a-text>
-
      
     </a-entity>
     
+
+    <!-- Audio Section -->
+
+    <!-- Pillar Audio -->
+    <a-entity id="elephant_audio"
+      sound="src: url(../audio/audio1.wav); autoplay: false; positional: true"
+      position="2.85 -0.41 5.27">
+    </a-entity>
 
 
 
@@ -190,11 +197,11 @@
 
     enter_vr_btn.addEventListener("click", function () {
     enter_vr_btn.style.display='none';
-    intro_audio.play();
+    //intro_audio.play();
     scene.setAttribute('visible','true')
     if (scene) {
       scene.enterVR();
-      functions.wait_time_vr();
+      functions.scene2();
     }
   });
   </script>
@@ -245,6 +252,8 @@
         elephant_plane.setAttribute('visible','true')
         pillar_text.setAttribute('visible','true')
         elephant_text.setAttribute('visible','true')
+
+        elephant_audio.components.sound.playSound();
       }
     };
 
@@ -318,7 +327,13 @@
   });
 </script>
 
+<script>
+  var reaction_time_pillar = 0;
+  var reaction_time_pliiar = 0;
 
+  const elephant_audio = document.getElementById('elephant_audio')
+
+</script>
 
 </body>
 </html>
