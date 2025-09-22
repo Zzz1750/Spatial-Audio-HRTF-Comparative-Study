@@ -165,16 +165,19 @@
 
     <!-- Audio Section -->
 
-    <!-- Pillar Audio -->
+    <!-- Elephant Audio -->
     <a-entity id="elephant_audio"
-      sound="src: url(../audio/audio1.wav); autoplay: false; positional: true; loop: true;"
+      sound="src: url(../audio/audio1.wav); autoplay: false; positional: true;"
       position="-11.48137 -1.3207 -4.07978">
     </a-entity>
- 
+
+    <!-- Pillar Audio -->
+    <a-entity id="pillar_audio"
+      sound="src: url(../audio/audio2.wav); autoplay: false; positional: true;"
+      position="-3.87222 3.53034 5.88735">
+    </a-entity>
+
     
-
-
-
   <!-- Sky -->
   <a-sky radius="20"></a-sky>
   
@@ -204,7 +207,7 @@
     scene.setAttribute('visible','true')
     if (scene) {
       scene.enterVR();
-      functions.scene2();
+      functions.wait_time_vr();
     }
   });
   </script>
@@ -256,7 +259,15 @@
         pillar_text.setAttribute('visible','true')
         elephant_text.setAttribute('visible','true')
 
-        elephant_audio.components.sound.playSound();
+        setTimeout(()=>{
+          elephant_audio.components.sound.playSound();
+        },2000);
+
+        setTimeout(()=>{
+          pillar_audio.components.sound.playSound(); 
+        },8000);
+
+
       }
     };
 
@@ -334,7 +345,9 @@
   var reaction_time_pillar = 0;
   var reaction_time_pliiar = 0;
 
-  const elephant_audio = document.getElementById('elephant_audio')
+  const elephant_audio = document.getElementById('elephant_audio');
+  const pillar_audio = document.getElementById('pillar_audio')
+
 
 </script>
 
