@@ -178,8 +178,8 @@
     </a-entity>
 
     
-  <!-- Sky -->
-  <a-sky radius="20"></a-sky>
+  <!-- Replaced Sky with Sphere -->
+  <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 20" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
   
 
 
@@ -214,7 +214,7 @@
 
 
   <script>
-    const sky = document.querySelector('a-sky');
+    const skySphere = document.getElementById('sky-sphere');
     const to_scene2 = document.getElementById('to_scene2');
     const intro_text = document.getElementById('intro_text');
     const intro_text2 = document.getElementById('intro_text2');
@@ -226,12 +226,14 @@
 
     const functions = {
       wait_time_vr: function () {
-        sky.setAttribute('src', '../images/wait_vr.webp');
+        // Set initial texture for the sphere
+        skySphere.setAttribute('material', 'src: ../images/wait_vr.webp; shader: flat; side: back');
         wait_logo.setAttribute('visible','true')
         setTimeout(functions.scene1, 9000);
       },
       scene1: function () {
-        sky.setAttribute('src', '../images/intro.webp');
+        // Change sphere texture
+        skySphere.setAttribute('material', 'src: ../images/intro.webp; shader: flat; side: back');
         wait_logo.setAttribute('visible','false')
 
         setTimeout(()=>{
@@ -249,7 +251,8 @@
 
       },
       scene2: function () {
-        sky.setAttribute('src', '../images/1.webp');
+        // Change sphere texture
+        skySphere.setAttribute('material', 'src: ../images/1.webp; shader: flat; side: back');
         intro_text.setAttribute('visible','false')
         intro_text2.setAttribute('visible','false')
         start_scene1.setAttribute('visible','false')
