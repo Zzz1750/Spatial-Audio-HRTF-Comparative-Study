@@ -303,10 +303,13 @@
         setTimeout(() => {
           pillar_audio.components.sound.playSound();
 
-          check_reaction_time(left_pillar_plane, (time) => {
-            reaction_time_pillar = time;
-            pillar_reaction.setAttribute('value', `Pillar Reaction: ${reaction_time_pillar}s`);
+           setTimeout(()=>{
+              check_reaction_time(left_pillar_plane, (time) => {
+              reaction_time_pillar = time;
+              pillar_reaction.setAttribute('value', `Pillar Reaction: ${reaction_time_pillar}s`);
           });
+           },1000);
+        
         }, 14000);
 
 
