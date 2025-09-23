@@ -253,7 +253,7 @@
       wait_time_vr: function () {
         skySphere.setAttribute('material', 'src: ../images/wait_vr.webp; shader: flat; side: back');
         wait_logo.setAttribute('visible','true')
-        setTimeout(functions.scene1, 9000);
+        setTimeout(functions.scene1, 8000);
       },
       scene1: function () {
         skySphere.setAttribute('material', 'src: ../images/intro.webp; shader: flat; side: back');
@@ -261,7 +261,7 @@
 
         setTimeout(()=>{
           intro_text.setAttribute('visible','true')
-        },1200)
+        },1800)
 
         setTimeout(()=>{
           intro_text2.setAttribute('visible','true')
@@ -295,9 +295,9 @@
                   reaction_time_elephant = time;
                   elephant_reaction.setAttribute('value', ` Elephant Reaction: ${reaction_time_elephant}s`);
                 });
-            },300);
+            },3000); //audio time here
           
-          }, 3000);
+          }, 3000); 
 
         setTimeout(() => {
           pillar_audio.components.sound.playSound();
@@ -307,9 +307,9 @@
               reaction_time_pillar = time;
               pillar_reaction.setAttribute('value', `Pillar Reaction: ${reaction_time_pillar}s`);
           });
-           },600);
+           },6000); //audio time here
         
-        }, 14000);
+        }, 8000);
 
 
 
