@@ -251,7 +251,6 @@
 
     const functions = {
       wait_time_vr: function () {
-        // Set initial texture for the sphere
         skySphere.setAttribute('material', 'src: ../images/wait_vr.webp; shader: flat; side: back');
         wait_logo.setAttribute('visible','true')
         setTimeout(functions.scene1, 9000);
@@ -262,7 +261,7 @@
 
         setTimeout(()=>{
           intro_text.setAttribute('visible','true')
-        },1000)
+        },1200)
 
         setTimeout(()=>{
           intro_text2.setAttribute('visible','true')
@@ -296,7 +295,7 @@
                   reaction_time_elephant = time;
                   elephant_reaction.setAttribute('value', ` Elephant Reaction: ${reaction_time_elephant}s`);
                 });
-            },1000);
+            },300);
           
           }, 3000);
 
@@ -308,7 +307,7 @@
               reaction_time_pillar = time;
               pillar_reaction.setAttribute('value', `Pillar Reaction: ${reaction_time_pillar}s`);
           });
-           },1000);
+           },600);
         
         }, 14000);
 
