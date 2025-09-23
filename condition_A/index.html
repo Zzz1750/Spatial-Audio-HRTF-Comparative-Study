@@ -178,8 +178,8 @@
     </a-entity>
 
     
-  <!-- Replaced Sky with Sphere -->
-  <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 5" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
+  <!-- Sky with Sphere -->
+  <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 50" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
   
 
 
@@ -203,11 +203,11 @@
 
     enter_vr_btn.addEventListener("click", function () {
     enter_vr_btn.style.display='none';
-    intro_audio.play();
+    //intro_audio.play();
     scene.setAttribute('visible','true')
     if (scene) {
       scene.enterVR();
-      functions.wait_time_vr();
+      functions.scene2();
     }
   });
   </script>
