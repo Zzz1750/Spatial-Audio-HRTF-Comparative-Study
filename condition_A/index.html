@@ -132,8 +132,8 @@
     <a-plane id="elephantt_pillar_plane" 
         class="ray-target" 
         color="yellow" 
-        width="2" 
-        height="2" 
+        width="3" 
+        height="4" 
         position="5.5 1.8 -10"
         rotation="0 -30 0"
         opacity= '0.8'
@@ -221,10 +221,10 @@
 
     enter_vr_btn.addEventListener("click", function () {
     enter_vr_btn.style.display='none';
-    //intro_audio.play();
+    intro_audio.play();
     scene.setAttribute('visible','true')
     if (scene) {
-      scene.enterVR();
+      scene.wait_time_vr();
       functions.scene2();
     }
   });
