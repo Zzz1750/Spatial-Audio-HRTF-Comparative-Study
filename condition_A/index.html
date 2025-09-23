@@ -133,7 +133,7 @@
         class="ray-target" 
         color="yellow" 
         width="3" 
-        height="4" 
+        height="3.5" 
         position="5.5 1.8 -10"
         rotation="0 -30 0"
         opacity= '0.8'
@@ -291,11 +291,14 @@
         setTimeout(() => {
           elephant_audio.components.sound.playSound();
 
-          check_reaction_time(elephant_plane, (time) => {
-            reaction_time_elephant = time;
-            elephant_reaction.setAttribute('value', ` Elephant Reaction: ${reaction_time_elephant}s`);
-          });
-        }, 2000);
+           setTimeout(()=>{
+                check_reaction_time(elephant_plane, (time) => { 
+                  reaction_time_elephant = time;
+                  elephant_reaction.setAttribute('value', ` Elephant Reaction: ${reaction_time_elephant}s`);
+                });
+            },1000);
+          
+          }, 3000);
 
         setTimeout(() => {
           pillar_audio.components.sound.playSound();
@@ -304,7 +307,7 @@
             reaction_time_pillar = time;
             pillar_reaction.setAttribute('value', `Pillar Reaction: ${reaction_time_pillar}s`);
           });
-        }, 8000);
+        }, 14000);
 
 
 
@@ -409,7 +412,7 @@
         clearInterval(reaction_watch);
         callback(0);
       }
-    }, 5000);
+    }, 10000);
   }
 
 
