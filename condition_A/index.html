@@ -118,9 +118,9 @@
   <!-- Left Pillar Plane (target for raycast) -->
     <a-plane id="left_pillar_plane" 
         class="ray-target" 
-        color="tomato" 
-        width="2" 
-        height="12" 
+        color="yellow" 
+        width="0" 
+        height="0" 
         position="-6.2 5 -4"
         rotation="0 60 0"
         opacity= '0.8'
@@ -129,11 +129,11 @@
     </a-plane>
 
     <!-- Elephant Plane (target for raycast) -->
-    <a-plane id="elephantt_pillar_plane" 
+    <a-plane id="elephantt_plane" 
         class="ray-target" 
         color="yellow" 
-        width="3" 
-        height="3.5" 
+        width="0" 
+        height="0" 
         position="5.5 1.8 -10"
         rotation="0 -30 0"
         opacity= '0.8'
@@ -141,7 +141,36 @@
         visible="false">
     </a-plane>
 
-      <!-- Text to display result -->
+
+    <!-- Elephant DUMMY Plane (target for raycast) -->
+    <a-plane id="elephant_dummy_plane" 
+        class="ray-target" 
+        color="red" 
+        width="1.5" 
+        height="2.5" 
+        position="-4.5 1.8 -10"
+        rotation="0 30 0"
+        opacity= '0.8'
+        transparent = 'true'
+        visible="false">
+    </a-plane>
+
+     <!-- Left Pillar DUMMY Plane (target for raycast) -->
+    <a-plane id="left_pillar_dummy_plane" 
+        class="ray-target" 
+        color="red" 
+        width="2" 
+        height="12" 
+        position="7 5 -4"
+        rotation="0 -60 0"
+        opacity= '0.8'
+        transparent = 'true'
+        visible="false">
+    </a-plane>
+
+    <!-- Debugging Texts Here -->
+
+      <!-- Pillar Text -->
       <a-text id="pillar_text" 
         value="Pillar Data " 
         position="0 2 -3" 
@@ -150,7 +179,7 @@
         visible="false">
       </a-text>
       
-      <!-- Text to display result -->
+      <!-- Elephant Text -->
       <a-text id="elephant_text" 
         value="Elephant Data" 
         position="2 3 -3" 
@@ -159,7 +188,7 @@
         visible="false">
       </a-text>
 
-      <!-- Text to display result -->
+      <!-- Elephant Reaction Text -->
       <a-text id="elephant_reaction" 
         value="elephant reaction " 
         position="-2 2 -3" 
@@ -168,7 +197,7 @@
         visible="false">
       </a-text>
 
-      <!-- Text to display result -->
+      <!-- Pillar Reaction Text -->
       <a-text id="pillar_reaction" 
         value="Pillar reaction " 
         position="3 1 -3" 
@@ -176,7 +205,24 @@
         color="yellow"
         visible="false">
       </a-text>
+
+      <!-- Elephant Navigation -->
+      <a-text id="elephant_nav_text" 
+        value="Elephant Nav:  " 
+        position="-2 0 -3" 
+        align="center" 
+        color="yellow"
+        visible="false">
+      </a-text>
      
+      <!-- Pillar Navigation -->
+      <a-text id="pillar_nav_text" 
+        value="Pillar Nav:  " 
+        position="1 0 -3" 
+        align="center" 
+        color="yellow"
+        visible="false">
+      </a-text>
 
     </a-entity>
   
@@ -225,12 +271,12 @@
     scene.setAttribute('visible','true')
     if (scene) {
       scene.enterVR();
-      functions.wait_time_vr();
+      functions.scene2();
     }
   });
   </script>
 
-
+<!-- Scene Manager -->
   <script>
     const skySphere = document.getElementById('sky-sphere');
     const to_scene2 = document.getElementById('to_scene2');
@@ -242,10 +288,14 @@
 
     const elephant_reaction = document.getElementById('elephant_reaction')
     const pillar_reaction = document.getElementById('pillar_reaction')
-
+    const elephant_nav_text = document.getElementById('elephant_nav_text');
+    const pillar_nav_text = document.getElementById('pillar_nav_text')
 
     var reaction_time_elephant = 0;
     var reaction_time_pillar = 0;
+
+    var elephant_nav='';
+    var pillar_nav='';
 
     var intro_ready = 0;
 
@@ -274,18 +324,36 @@
 
       },
       scene2: function () {
+        
+        //General Sky
         skySphere.setAttribute('material', 'src: ../images/1.webp; shader: flat; side: back');
+        
+        //prev scene components
         intro_text.setAttribute('visible','false')
         intro_text2.setAttribute('visible','false')
         start_scene1.setAttribute('visible','false')
 
+        //a-plane components
         left_pillar_plane.setAttribute('visible','true')
         elephant_plane.setAttribute('visible','true')
+        elephant_dummy_plane.setAttribute('visible','true')
+        left_pillar_dummy_plane.setAttribute('visible','true')
+
+
         pillar_text.setAttribute('visible','true')
         elephant_text.setAttribute('visible','true')
-
         elephant_reaction.setAttribute('visible','true')
         pillar_reaction.setAttribute('visible','true')
+        elephant_nav_text.setAttribute('visible','true')
+        pillar_nav_text.setAttribute('visible','true')
+
+        //change it when new scene comes to avoid invisible data overidding 
+        left_pillar_plane.setAttribute('width','2')
+        left_pillar_plane.setAttribute('height','12')
+
+        elephant_plane.setAttribute('width','2')
+        elephant_plane.setAttribute('height','2.5')
+
 
         setTimeout(() => {
           elephant_audio.components.sound.playSound();
@@ -295,9 +363,13 @@
                   reaction_time_elephant = time;
                   elephant_reaction.setAttribute('value', ` Elephant Reaction: ${reaction_time_elephant}s`);
                 });
-            },3000); //audio time here
-          
-          }, 3000); 
+
+                check_dummy_wins(elephant_plane, elephant_dummy_plane).then(result => {
+                  elephant_nav = result;
+                  elephant_nav_text.setAttribute('value', `Elephant Nav: ${elephant_nav}`);
+                });
+              },3000); //audio time here
+            }, 3000); 
 
         setTimeout(() => {
           pillar_audio.components.sound.playSound();
@@ -306,16 +378,19 @@
               check_reaction_time(left_pillar_plane, (time) => {
               reaction_time_pillar = time;
               pillar_reaction.setAttribute('value', `Pillar Reaction: ${reaction_time_pillar}s`);
+            });
+          },6000); //audio time here
+
+          check_dummy_wins(left_pillar_plane, left_pillar_dummy_plane).then(result => {
+            pillar_nav = result;
+            pillar_nav_text.setAttribute('value', `Pillar Nav: ${pillar_nav}`);
           });
-           },6000); //audio time here
-        
         }, 8000);
-
-
-
       }
     };
 
+
+  //intro functions
     start_scene1.addEventListener('click',()=>{
       if(intro_ready == 1){
         document.getElementById('intro_audio').pause();
@@ -344,6 +419,8 @@
 
   </script>
 
+
+<!-- Gaze Calculator -->
  <script>
   const gazeData = {
     leftPillar: { time: 0 },
@@ -369,7 +446,7 @@
   const elephant_text = document.getElementById('elephant_text');
 
   const left_pillar_plane = document.getElementById('left_pillar_plane');
-  const elephant_plane = document.getElementById('elephantt_pillar_plane');
+  const elephant_plane = document.getElementById('elephantt_plane');
 
   left_pillar_plane.addEventListener('mouseenter', () => {
     gaze_calculator_enter();
@@ -386,8 +463,9 @@
   });
 </script>
 
-<script>
 
+<!-- Reaction Time Calculator -->
+<script>
   const elephant_audio = document.getElementById('elephant_audio');
   const pillar_audio = document.getElementById('pillar_audio')
 
@@ -420,5 +498,32 @@
 
 </script>
 
+
+<!-- dummy or not -->
+<script>
+  const elephant_dummy_plane = document.getElementById('elephant_dummy_plane');
+  const left_pillar_dummy_plane = document.getElementById('left_pillar_dummy_plane');
+  
+  function check_dummy_wins(target_plane, dummy_plane) {
+    return new Promise((resolve) => {
+      let finished = false;
+
+      function handleHover(buttonType) {
+        if (!finished) {
+          finished = true;
+          if (buttonType === 'target') {
+            resolve('Success'); // target plane wins
+          } else {
+            resolve('Fail'); // dummy plane wins
+          }
+        }
+      }
+
+      target_plane.addEventListener('mouseenter', () => handleHover('target'), { once: true });
+      dummy_plane.addEventListener('mouseenter', () => handleHover('dummy'), { once: true });
+    });
+  }
+
+</script>
 </body>
 </html>
