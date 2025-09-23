@@ -158,6 +158,24 @@
         color="yellow"
         visible="false">
       </a-text>
+
+      <!-- Text to display result -->
+      <a-text id="elephant_reaction" 
+        value="elephant reaction " 
+        position="-2 2 -3" 
+        align="center" 
+        color="yellow"
+        visible="false">
+      </a-text>
+
+      <!-- Text to display result -->
+      <a-text id="pillar_reaction" 
+        value="Pillar reaction " 
+        position="3 3 -3" 
+        align="center" 
+        color="yellow"
+        visible="false">
+      </a-text>
      
 
     </a-entity>
@@ -179,7 +197,7 @@
 
     
   <!-- Sky with Sphere -->
-  <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 10" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
+  <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 20" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
   
 
 
@@ -222,6 +240,13 @@
     const intro_plane = document.getElementById('intro_plane');
     const wait_logo = document.getElementById('wait_logo');
 
+    const elephant_reaction = document.getElementById('elephant_reaction')
+    const pillar_reaction = document.getElementById('pillar_reaction')
+
+
+    var reaction_time_elephant = 0;
+    var reaction_time_pillar = 0;
+
     var intro_ready = 0;
 
     const functions = {
@@ -232,7 +257,6 @@
         setTimeout(functions.scene1, 9000);
       },
       scene1: function () {
-        // Change sphere texture
         skySphere.setAttribute('material', 'src: ../images/intro.webp; shader: flat; side: back');
         wait_logo.setAttribute('visible','false')
 
@@ -251,7 +275,6 @@
 
       },
       scene2: function () {
-        // Change sphere texture
         skySphere.setAttribute('material', 'src: ../images/1.webp; shader: flat; side: back');
         intro_text.setAttribute('visible','false')
         intro_text2.setAttribute('visible','false')
@@ -262,13 +285,27 @@
         pillar_text.setAttribute('visible','true')
         elephant_text.setAttribute('visible','true')
 
-        setTimeout(()=>{
-          elephant_audio.components.sound.playSound();
-        },2000);
+        elephant_reaction.setAttribute('visible','true')
+        pillar_reaction.setAttribute('visible','true')
 
-        setTimeout(()=>{
-          pillar_audio.components.sound.playSound(); 
-        },8000);
+        setTimeout(() => {
+          elephant_audio.components.sound.playSound();
+
+          check_reaction_time(elephant_plane, (time) => {
+            reaction_time_elephant = time;
+            elephant_reaction.setAttribute('value', `Reaction: ${reaction_time_elephant}s`);
+          });
+        }, 2000);
+
+        setTimeout(() => {
+          pillar_audio.components.sound.playSound();
+
+          check_reaction_time(left_pillar_plane, (time) => {
+            reaction_time_pillar = time;
+            pillar_reaction.setAttribute('value', `Reaction: ${reaction_time_pillar}s`);
+          });
+        }, 8000);
+
 
 
       }
@@ -345,11 +382,29 @@
 </script>
 
 <script>
-  var reaction_time_pillar = 0;
-  var reaction_time_pliiar = 0;
 
   const elephant_audio = document.getElementById('elephant_audio');
   const pillar_audio = document.getElementById('pillar_audio')
+
+
+  function check_reaction_time(planeEl, callback) {
+
+    let reaction_object = 0;
+
+    let reaction_watch = setInterval(() => {
+      reaction_object++;
+    }, 1000);
+
+    planeEl.addEventListener('mouseenter', () => {
+      clearInterval(reaction_watch);
+      callback(reaction_object);
+    });
+
+    setTimeout(() => {
+      clearInterval(reaction_watch);
+      callback(0);
+    }, 5000);
+  }
 
 
 </script>
