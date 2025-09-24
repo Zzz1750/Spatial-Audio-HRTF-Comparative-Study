@@ -66,14 +66,102 @@
     z-index: 11;
     opacity: 0.15;
   }
+  #condition_name{
+    color: white;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    position: absolute;
+    top: 5%;
+    left: 16%;
+    font-size: 2.5rem;
+    transform: translate(-50%, -50%);
+  }
+  #instruction_heading{
+    color: white;
+    position: absolute;
+    width: 50%;
+    justify-content: center;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.7rem;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    line-height: 3rem;
+  }
+  #to_name_page_div2{
+    position:absolute; 
+    z-index:12; 
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 12px 35px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  #checkbox_sys{
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+
+  }
+  #checkbox_sys input[type="checkbox"] {
+      width: 30px;
+      height: 12px;
+      cursor: pointer;
+      accent-color: gold;
+      top: 100px;
+    }
+    #main_welcome_name_page{
+      color: white;
+      position: absolute;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+    #main_welcome_button{
+      position:absolute; 
+      z-index:12; 
+      top: 48%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 12px 35px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
 </style>
 
 <body>
   <div id="name_page">
+    
+    <h1 id="condition_name">Condition B - HRTF 1</h1>
     <img src="../images/name_page.webp" id="main_back_image" alt="">
-    <label for="name_page_data" id="name_page_label">Participant ID: </label>
-    <input type="text" id="name_page_data" name="name_page_data">
-    <button id="enter-vr-btn">Enter VR</button>
+
+    <div id="name_page_div0">
+      <h1 id="main_welcome_name_page">Welcome to the Research </h1>
+      <button id="main_welcome_button">NEXT</button>
+    </div>
+    
+    
+    <div id="name_page_div1" style="display:none;">
+      <p id="instruction_heading">This condition uses HRTF-1 with head tracking disabled. Please keep your head facing forward - <span style="background-color: white; color:black; padding: 0px 5px;">do not explore the content</span> <br>Focus only on the audio for this Condition.</p>
+      <span id="checkbox_sys"><input type="checkbox" id="myCheckbox">I accept the above rules</span>
+      <button id="to_name_page_div2" style="display: none;">NEXT</button>
+    </div>
+
+     <div id="name_page_div2" style="display: none;">
+        <label for="name_page_data" id="name_page_label">Participant ID: </label>
+        <input type="text" id="name_page_data" name="name_page_data">
+        <button id="enter-vr-btn">Enter VR</button>
+    </div>
  </div>
 
   <audio id="intro_audio" src="../audio/intro_new.mp3"></audio>
@@ -194,8 +282,8 @@
     <a-plane id="elephant_dummy_plane" 
         class="ray-target" 
         color="red" 
-        width="" 
-        height="" 
+        width="0" 
+        height="0" 
         position="-4.5 1.8 -10"
         rotation="0 30 0"
         opacity= '0.8'
@@ -207,8 +295,8 @@
     <a-plane id="left_pillar_dummy_plane" 
         class="ray-target" 
         color="red" 
-        width="2" 
-        height="12" 
+        width="0" 
+        height="0" 
         position="7 5 -4"
         rotation="0 -60 0"
         opacity= '0.8'
@@ -216,7 +304,46 @@
         visible="false">
     </a-plane>
 
-    
+     <!-- Chandlier Plane (target for raycast) -->
+    <a-plane id="chandlier_plane" 
+        class="ray-target" 
+        color="yellow" 
+        width="5" 
+        height="5" 
+        position="0 9 -0.5"
+        rotation="90 0 0"
+        opacity= '0.8'
+        transparent = 'true'
+        visible="false">
+    </a-plane>
+
+    <!-- DUMMY 1 Chandlier Plane (target for raycast) -->
+    <a-plane id="chandlier_plane_dummy_1" 
+        class="ray-target" 
+        color="red" 
+        width="3.5" 
+        height="3.5" 
+        position="0 7.8 -12"
+        rotation="10 0 0"
+        opacity= '0.8'
+        transparent = 'true'
+        visible="false">
+    </a-plane>
+
+    <!-- DUMMY 2 Chandlier Plane (target for raycast) -->
+    <a-plane id="chandlier_plane_dummy_1" 
+        class="ray-target" 
+        color="red" 
+        width="3.5" 
+        height="3.5" 
+        position="0 9 12"
+        rotation="10 180 0"
+        opacity= '0.8'
+        transparent = 'true'
+        visible="false">
+    </a-plane>
+
+    </a-plane>
     <!-- Questionnaire Section -->
 
     <!-- scene 3 -->
@@ -358,7 +485,7 @@
     <!-- Door Audio -->
     <a-entity id="door_audio"
       sound="src: url(../audio/audio3.wav); autoplay: false; positional: true;"
-      position="-11.018 1.691 -0.341">
+      position="-8.3 1.691 -0.341">
     </a-entity>
 
     
@@ -398,6 +525,32 @@
   });
   </script>
 
+  <!-- common functions -->
+   <script>
+     const checkbox = document.getElementById("myCheckbox");
+     const to_name_page_div2 = document.getElementById('to_name_page_div2');
+
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked) {
+          to_name_page_div2.style.display='block';
+        } else {
+          to_name_page_div2.style.display='none';        
+        }
+      });
+
+      document.getElementById('main_welcome_button').addEventListener('click',()=>{
+        document.getElementById('name_page_div0').style.display='none';
+        document.getElementById('name_page_div1').style.display='block'
+      });
+
+      document.getElementById('to_name_page_div2').addEventListener('click',()=>{
+        document.getElementById('name_page_div1').style.display='none';        
+        document.getElementById('name_page_div2').style.display='block'
+      })
+
+      document.getElementById()
+   </script>
+
 <!-- Scene Manager -->
   <script>
     const skySphere = document.getElementById('sky-sphere');
@@ -409,22 +562,27 @@
     const wait_logo = document.getElementById('wait_logo');
 
     const question_scene3 = document.getElementById('question_scene3');
-    const option1_scene3 = document.getElementById('option1_scene3')
-    const option2_scene3 = document.getElementById('option2_scene3')
-    const option3_scene3 = document.getElementById('option3_scene3')
+    const option1_scene3 = document.getElementById('option1_scene3');
+    const option2_scene3 = document.getElementById('option2_scene3');
+    const option3_scene3 = document.getElementById('option3_scene3');
     var answer_scene3 ='';
 
 
-    const question_scene3_plane = document.getElementById('question_scene3_plane')
-    const option1_scene3_plane = document.getElementById('option1_scene3_plane')
-    const option2_scene3_plane = document.getElementById('option2_scene3_plane')
-    const option3_scene3_plane = document.getElementById('option3_scene3_plane')
+    const question_scene3_plane = document.getElementById('question_scene3_plane');
+    const option1_scene3_plane = document.getElementById('option1_scene3_plane');
+    const option2_scene3_plane = document.getElementById('option2_scene3_plane');
+    const option3_scene3_plane = document.getElementById('option3_scene3_plane');
     
 
-    const elephant_reaction = document.getElementById('elephant_reaction')
-    const pillar_reaction = document.getElementById('pillar_reaction')
+    const elephant_reaction = document.getElementById('elephant_reaction');
+    const pillar_reaction = document.getElementById('pillar_reaction');
     const elephant_nav_text = document.getElementById('elephant_nav_text');
-    const pillar_nav_text = document.getElementById('pillar_nav_text')
+    const pillar_nav_text = document.getElementById('pillar_nav_text');
+
+    const chandlier_plane = document.getElementById('chandlier_plane');
+    const chandlier_plane_dummy_1 = document.getElementById('chandlier_plane_dummy_1');
+    const chandlier_plane_dummy_2 = document.getElementById('chandlier_plane_dummy_2');
+
 
     var reaction_time_elephant = 0;
     var reaction_time_pillar = 0;
@@ -647,6 +805,9 @@
 
         option3_scene3_plane.setAttribute('width','0')
         option3_scene3_plane.setAttribute('height','0')
+
+        //a-plane components
+        chandlier_plane.setAttribute('visible','true')
     }
     };
 

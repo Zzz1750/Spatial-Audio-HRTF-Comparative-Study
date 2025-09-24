@@ -10,14 +10,14 @@
   
   <style>
     :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #34495e;
+      --primary-color: #f8f3e9;
+      --secondary-color: #d4c9b8;
       --accent-color: #8B4513;
       --light-bg: #f8f9fa;
-      --dark-text: #2c3e50;
-      --card-bg: #ffffff;
-      --card-hover: #f8f9fa;
-      --disabled: rgba(44, 62, 80, 0.2);
+      --dark-text: #3a3429;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-hover: rgba(255, 255, 255, 0.95);
+      --disabled: rgba(58, 52, 41, 0.2);
       --success: #27ae60;
       --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
@@ -30,14 +30,26 @@
     
     body {
       margin: 0;
-      background: var(--light-bg);
+      background: url('../images/main_back.JPG') no-repeat center center fixed;
+      background-size: cover;
       color: var(--dark-text);
       font-family: "Inter", sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: -1;
     }
     
     .container {
@@ -50,6 +62,7 @@
       flex: 1;
       align-items: center;
       justify-content: center;
+      z-index: 1;
     }
     
     header {
@@ -67,6 +80,7 @@
       color: var(--primary-color);
       font-weight: 700;
       letter-spacing: -0.5px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
     
     #sub_heading {
@@ -74,9 +88,10 @@
       max-width: 700px;
       margin: 0 auto;
       line-height: 1.6;
-      color: var(--dark-text);
+      color: var(--primary-color);
       font-weight: 400;
-      opacity: 0.8;
+      opacity: 0.9;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
     
     .content-area {
@@ -93,11 +108,12 @@
       background: var(--card-bg);
       border-radius: 16px;
       padding: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       transition: var(--transition);
-      border: 1px solid rgba(44, 62, 80, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       width: 100%;
       animation: slideUp 0.5s ease-out;
+      backdrop-filter: blur(10px);
     }
     
     .group-section {
@@ -128,7 +144,7 @@
       font-family: 'Inter', sans-serif;
       font-size: 1.5rem;
       margin-bottom: 25px;
-      color: var(--primary-color);
+      color: var(--dark-text);
       font-weight: 600;
       position: relative;
       padding-bottom: 12px;
@@ -169,39 +185,41 @@
       align-items: center;
       gap: 15px;
       padding: 18px 20px;
-      background: rgba(44, 62, 80, 0.03);
+      background: rgba(255, 255, 255, 0.6);
       border-radius: 12px;
-      opacity: 0.6;
+      opacity: 0.8;
       transition: var(--transition);
       cursor: pointer;
       transform: translateY(5px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
     }
     
     .path-step:hover {
-      background: rgba(44, 62, 80, 0.05);
+      background: rgba(255, 255, 255, 0.8);
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
     .path-step.active {
       opacity: 1;
-      background: rgba(139, 69, 19, 0.08);
-      border: 1px solid rgba(139, 69, 19, 0.2);
-      box-shadow: 0 4px 12px rgba(139, 69, 19, 0.1);
+      background: rgba(139, 69, 19, 0.15);
+      border: 1px solid rgba(139, 69, 19, 0.3);
+      box-shadow: 0 4px 12px rgba(139, 69, 19, 0.2);
       transform: translateY(0);
     }
     
     .path-step.completed {
       opacity: 1;
-      background: rgba(39, 174, 96, 0.08);
+      background: rgba(39, 174, 96, 0.15);
       transform: translateY(0);
+      border: 1px solid rgba(39, 174, 96, 0.3);
     }
     
     .step-number {
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: var(--secondary-color);
+      background: var(--dark-text);
       color: white;
       display: flex;
       align-items: center;
@@ -251,18 +269,18 @@
       font-weight: 500;
       cursor: pointer;
       transition: var(--transition);
-      box-shadow: 0 4px 6px rgba(139, 69, 19, 0.2);
+      box-shadow: 0 4px 6px rgba(139, 69, 19, 0.3);
     }
     
     .action-btn:hover {
       background: #6B3100;
       transform: translateY(-2px);
-      box-shadow: 0 6px 8px rgba(139, 69, 19, 0.3);
+      box-shadow: 0 6px 8px rgba(139, 69, 19, 0.4);
     }
     
     .group-btn {
       background: var(--card-bg);
-      border: 1px solid rgba(44, 62, 80, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.5);
       border-radius: 12px;
       color: var(--dark-text);
       padding: 25px 15px;
@@ -279,6 +297,7 @@
       text-align: center;
       min-height: 120px;
       transform: translateY(0);
+      backdrop-filter: blur(5px);
     }
     
     .group-btn::before {
@@ -288,15 +307,16 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(to bottom, rgba(139, 69, 19, 0.05), transparent);
+      background: linear-gradient(to bottom, rgba(139, 69, 19, 0.1), transparent);
       opacity: 0;
       transition: var(--transition);
     }
     
     .group-btn:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
       border-color: var(--accent-color);
+      background: var(--card-hover);
     }
     
     .group-btn:hover::before {
@@ -308,7 +328,7 @@
     }
     
     .group-btn.selected {
-      background: rgba(139, 69, 19, 0.1);
+      background: rgba(139, 69, 19, 0.15);
       color: var(--accent-color);
       font-weight: 600;
       border: 1px solid var(--accent-color);
@@ -317,11 +337,12 @@
     
     .progress-container {
       margin-top: 20px;
-      background: rgba(44, 62, 80, 0.03);
+      background: rgba(255, 255, 255, 0.6);
       border-radius: 12px;
       padding: 20px;
       text-align: center;
       width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.5);
     }
     
     .progress-text {
@@ -333,7 +354,7 @@
     
     .progress-bar {
       height: 10px;
-      background: rgba(44, 62, 80, 0.1);
+      background: rgba(58, 52, 41, 0.1);
       border-radius: 10px;
       overflow: hidden;
       margin: 0 auto;
@@ -342,7 +363,7 @@
     
     .progress-fill {
       height: 100%;
-      background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
+      background: linear-gradient(to right, var(--accent-color), var(--dark-text));
       border-radius: 10px;
       width: 0%;
       transition: width 0.5s ease;
@@ -352,12 +373,13 @@
       text-align: center;
       margin-top: 20px;
       padding: 20px;
-      background: rgba(39, 174, 96, 0.1);
+      background: rgba(39, 174, 96, 0.15);
       border-radius: 12px;
       display: none;
       font-weight: 500;
       color: var(--success);
       animation: pulse 2s infinite;
+      border: 1px solid rgba(39, 174, 96, 0.3);
     }
     
     .group-icon {
@@ -505,31 +527,31 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Define the condition patterns for each group
+      // Define the condition patterns for each group with custom links
       const groupPatterns = {
         1: [
-          { id: 'A', title: 'Condition A' },
-          { id: 'B', title: 'Condition B' },
-          { id: 'C', title: 'Condition C' },
-          { id: 'D', title: 'Condition D' }
+          { id: 'A', title: 'Condition A', link: '/condition_A/index.html' },
+          { id: 'B', title: 'Condition B', link: '/condition_B/index.html' },
+          { id: 'C', title: 'Condition C', link: '/condition_C/index.html' },
+          { id: 'D', title: 'Condition D', link: '/condition_D/index.html' }
         ],
         2: [
-          { id: 'B', title: 'Condition B' },
-          { id: 'C', title: 'Condition C' },
-          { id: 'D', title: 'Condition D' },
-          { id: 'A', title: 'Condition A' }
+          { id: 'B', title: 'Condition B', link: '/condition_B/index.html' },
+          { id: 'C', title: 'Condition C', link: '/condition_C/index.html' },
+          { id: 'D', title: 'Condition D', link: '/condition_D/index.html' },
+          { id: 'A', title: 'Condition A', link: '/condition_A/index.html' }
         ],
         3: [
-          { id: 'C', title: 'Condition C' },
-          { id: 'D', title: 'Condition D' },
-          { id: 'A', title: 'Condition A' },
-          { id: 'B', title: 'Condition B' }
+          { id: 'C', title: 'Condition C', link: '/condition_C/index.html' },
+          { id: 'D', title: 'Condition D', link: '/condition_D/index.html' },
+          { id: 'A', title: 'Condition A', link: '/condition_A/index.html' },
+          { id: 'B', title: 'Condition B', link: '/condition_B/index.html' }
         ],
         4: [
-          { id: 'D', title: 'Condition D' },
-          { id: 'A', title: 'Condition A' },
-          { id: 'B', title: 'Condition B' },
-          { id: 'C', title: 'Condition C' }
+          { id: 'D', title: 'Condition D', link: '/condition_D/index.html' },
+          { id: 'A', title: 'Condition A', link: '/condition_A/index.html' },
+          { id: 'B', title: 'Condition B', link: '/condition_B/index.html' },
+          { id: 'C', title: 'Condition C', link: '/condition_C/index.html' }
         ]
       };
       
@@ -612,11 +634,11 @@
             </div>
           `;
           
-          // Add click event to open Google.com for active conditions
+          // Add click event to open custom link for active conditions
           if (index === currentStep) {
             stepElement.addEventListener('click', function() {
-              // Open Google in a new tab
-              window.open('https://www.google.com', '_blank');
+              // Open the condition's custom link in a new tab
+              window.open(condition.link, '_blank');
               
               // Complete the condition and unlock the next one
               completeCondition(condition.id);
