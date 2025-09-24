@@ -72,7 +72,7 @@
     position: absolute;
     top: 5%;
     left: 16%;
-    font-size: 2.5rem;
+    font-size: 2rem;
     transform: translate(-50%, -50%);
   }
   #instruction_heading{
@@ -83,14 +83,14 @@
     top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     line-height: 3rem;
   }
   #to_name_page_div2{
     position:absolute; 
     z-index:12; 
-    top: 60%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 12px 35px;
@@ -103,7 +103,7 @@
   #checkbox_sys{
     color: white;
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 15;
@@ -145,19 +145,19 @@
     <h1 id="condition_name">Condition B - HRTF 1</h1>
     <img src="../images/name_page.webp" id="main_back_image" alt="">
 
-    <div id="name_page_div0">
+    <div id="name_page_div0" style="display: none;">
       <h1 id="main_welcome_name_page">Welcome to the Research </h1>
       <button id="main_welcome_button">NEXT</button>
     </div>
     
     
     <div id="name_page_div1" style="display:none;">
-      <p id="instruction_heading">This condition uses HRTF-1 with head tracking disabled. Please keep your head facing forward - <span style="background-color: white; color:black; padding: 0px 5px;">do not explore the content</span> <br>Focus only on the audio for this Condition.</p>
+      <p id="instruction_heading">This condition uses HRTF-1 with head tracking disabled. Please keep your head facing forward <br> <span style="background-color: white; color:black; padding: 0px 5px;">do not explore the content</span> <br> <br>Focus only on the audio for this Condition.</p>
       <span id="checkbox_sys"><input type="checkbox" id="myCheckbox">I accept the above rules</span>
       <button id="to_name_page_div2" style="display: none;">NEXT</button>
     </div>
 
-     <div id="name_page_div2" style="display: none;">
+     <div id="name_page_div2" style="display: block;">
         <label for="name_page_data" id="name_page_label">Participant ID: </label>
         <input type="text" id="name_page_data" name="name_page_data">
         <button id="enter-vr-btn">Enter VR</button>
@@ -165,7 +165,7 @@
  </div>
 
   <audio id="intro_audio" src="../audio/intro_new.mp3"></audio>
-  <audio id="question3_audio" src="../audio/question3_song.mp3"></audio>
+  <audio id="main_audio_vr" src="../audio/question3_song.mp3" loop></audio>
 
   <a-scene id="scene" vr-mode-ui="enabled: false" xr-mode-ui="enabled: false" visible="false">
 
@@ -217,6 +217,14 @@
       visible="false">
     </a-plane>
 
+    <a-text
+      id="intro_text_presented"
+      value="Presented by"
+      position="-0.25 2.5 -3" 
+      width="2" 
+      color="white"
+      rotation="0 0 0"
+      visible="false"></a-text>
 
     <a-text id="intro_text2" 
       value="Start when you are ready " 
@@ -247,6 +255,9 @@
         position="0 0 0.01" 
         width="3"
       ></a-text>
+
+
+
     </a-entity>
 
 
@@ -407,6 +418,8 @@
 
      
 
+     
+
 
 
     <!-- Debugging Texts Here -->
@@ -485,7 +498,7 @@
     <!-- Door Audio -->
     <a-entity id="door_audio"
       sound="src: url(../audio/audio3.wav); autoplay: false; positional: true;"
-      position="-8.3 1.691 -0.341">
+      position="-7.8 1.691 -0.341">
     </a-entity>
 
     
@@ -548,7 +561,7 @@
         document.getElementById('name_page_div2').style.display='block'
       })
 
-      document.getElementById()
+      
    </script>
 
 <!-- Scene Manager -->
@@ -583,6 +596,7 @@
     const chandlier_plane_dummy_1 = document.getElementById('chandlier_plane_dummy_1');
     const chandlier_plane_dummy_2 = document.getElementById('chandlier_plane_dummy_2');
 
+    const intro_text_presented = document.getElementById('intro_text_presented');
 
     var reaction_time_elephant = 0;
     var reaction_time_pillar = 0;
@@ -593,12 +607,17 @@
     var intro_ready = 0;
 
     const functions = {
+
+
       wait_time_vr: function () {
+        intro_text_presented.setAttribute('visible','true')
         skySphere.setAttribute('material', 'src: ../images/wait_vr.webp; shader: flat; side: back');
-        wait_logo.setAttribute('visible','true')
-        setTimeout(functions.scene1, 8000);
-        intro_audio.play();
+        wait_logo.setAttribute('visible','true');
+        //setTimeout(functions.scene1, 8000);
+        //intro_audio.play();
       },
+
+
       scene1: function () {
         skySphere.setAttribute('material', 'src: ../images/intro.webp; shader: flat; side: back');
         wait_logo.setAttribute('visible','false')
@@ -614,8 +633,12 @@
         },5000)
 
       },
+
+
       scene2: function () {
-        
+        const question3_audio = document.getElementById('question3_audio');
+        main_audio_vr.play();
+
         //General Sky
         skySphere.setAttribute('material', 'src: ../images/1.webp; shader: flat; side: back');
         
@@ -703,10 +726,6 @@
     scene3: function(){
       //General Sky
       skySphere.setAttribute('material', 'src: ../images/question1.webp; shader: flat; side: back');
-
-      //audio
-      const question3_audio = document.getElementById('question3_audio');
-      question3_audio.play();
 
       //prev components
         left_pillar_plane.setAttribute('visible','false')
