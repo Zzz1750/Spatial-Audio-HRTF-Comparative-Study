@@ -40,40 +40,6 @@
       overflow-x: hidden;
     }
     
-    .background-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-    }
-    
-    .background-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-    
-    .background-image.loaded {
-      opacity: 1;
-    }
-    
-    .fallback-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #8B4513 0%, #5a4a3a 50%, #3a3429 100%);
-      z-index: -3;
-    }
-    
     body::before {
       content: '';
       position: absolute;
@@ -83,6 +49,24 @@
       height: 100%;
       background: rgba(0, 0, 0, 0.4);
       z-index: -1;
+    }
+    
+    body::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('../images/main_back.webp') no-repeat center center fixed;
+      background-size: cover;
+      z-index: -2;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    
+    body.background-loaded::after {
+      opacity: 1;
     }
     
     .container {
@@ -510,17 +494,6 @@
   </style>
 </head>
 <body>
-  <div class="background-container">
-    <!-- Fallback gradient background -->
-    <div class="fallback-background"></div>
-    
-    <!-- WebP image with fallback to JPG -->
-    <picture>
-      <source srcset="../images/main_back.webp" type="image/webp">
-      <img class="background-image" src="../images/main_back.webp" alt="Chettinad Background" onload="this.classList.add('loaded')">
-    </picture>
-  </div>
-  
   <div class="container">
     <header>
       <h1>Soundscapes of Chettinad</h1>
@@ -572,6 +545,20 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Preload the background image for VR
+      const bgImage = new Image();
+      bgImage.src = '../images/main_back.webp';
+      
+      bgImage.onload = function() {
+        document.body.classList.add('background-loaded');
+        console.log('Background image loaded successfully');
+      };
+      
+      bgImage.onerror = function() {
+        console.log('Background image failed to load, using fallback color');
+        // The fallback color will remain visible
+      };
+
       // Define the condition patterns for each group with custom links
       const groupPatterns = {
         1: [
@@ -720,13 +707,6 @@
         progressFill.style.width = `${progress}%`;
         progressPercent.textContent = `${Math.round(progress)}%`;
       }
-      
-      // Handle background image loading issues
-      const bgImage = document.querySelector('.background-image');
-      bgImage.addEventListener('error', function() {
-        console.log('Background image failed to load, using fallback');
-        // The fallback gradient will remain visible
-      });
     });
   </script>
 </body>
