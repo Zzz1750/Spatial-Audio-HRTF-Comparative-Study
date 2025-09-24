@@ -58,7 +58,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('../images/main_back.webp') no-repeat center center fixed;
+      background-image: url('images/main_back.webp'); /* Changed to relative path */
+      background-repeat: no-repeat;
+      background-position: center center;
       background-size: cover;
       z-index: -2;
       opacity: 0;
@@ -545,9 +547,27 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Preload the background image for VR
+      // Function to determine the correct base path for GitHub Pages
+      function getBasePath() {
+        // Check if we're on GitHub Pages by looking for the repository name in the URL
+        const pathSegments = window.location.pathname.split('/').filter(segment => segment);
+        const repoName = 'Spatial-Audio-HRTF-Comparative-Study'; // Replace with your actual repo name if different
+        const isGitHubPages = pathSegments.includes(repoName);
+        
+        if (isGitHubPages) {
+          // On GitHub Pages, use absolute path from root
+          return '/' + repoName + '/';
+        } else {
+          // Local development, use relative path
+          return './';
+        }
+      }
+      
+      const basePath = getBasePath();
+      
+      // Preload the background image with fallback
       const bgImage = new Image();
-      bgImage.src = '../images/main_back.webp';
+      bgImage.src = basePath + 'images/main_back.webp';
       
       bgImage.onload = function() {
         document.body.classList.add('background-loaded');
@@ -556,34 +576,47 @@
       
       bgImage.onerror = function() {
         console.log('Background image failed to load, using fallback color');
-        // The fallback color will remain visible
+        // Try fallback image format if webp fails
+        const fallbackImage = new Image();
+        fallbackImage.src = basePath + 'images/main_back.jpg';
+        
+        fallbackImage.onload = function() {
+          document.body.style.backgroundImage = 'url(' + basePath + 'images/main_back.jpg)';
+          document.body.classList.add('background-loaded');
+          console.log('Fallback background image loaded successfully');
+        };
+        
+        fallbackImage.onerror = function() {
+          console.log('Both background images failed to load, using fallback color');
+          // The fallback color will remain visible
+        };
       };
 
       // Define the condition patterns for each group with custom links
       const groupPatterns = {
         1: [
-          { id: 'A', title: 'Condition A', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_A/index.html' },
-          { id: 'B', title: 'Condition B', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_B/index.html' },
-          { id: 'C', title: 'Condition C', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_C/index.html' },
-          { id: 'D', title: 'Condition D', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_D/index.html' }
+          { id: 'A', title: 'Condition A', link: basePath + 'condition_A/index.html' },
+          { id: 'B', title: 'Condition B', link: basePath + 'condition_B/index.html' },
+          { id: 'C', title: 'Condition C', link: basePath + 'condition_C/index.html' },
+          { id: 'D', title: 'Condition D', link: basePath + 'condition_D/index.html' }
         ],
         2: [
-          { id: 'B', title: 'Condition B', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_B/index.html' },
-          { id: 'C', title: 'Condition C', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_C/index.html' },
-          { id: 'D', title: 'Condition D', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_D/index.html' },
-          { id: 'A', title: 'Condition A', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_A/index.html' }
+          { id: 'B', title: 'Condition B', link: basePath + 'condition_B/index.html' },
+          { id: 'C', title: 'Condition C', link: basePath + 'condition_C/index.html' },
+          { id: 'D', title: 'Condition D', link: basePath + 'condition_D/index.html' },
+          { id: 'A', title: 'Condition A', link: basePath + 'condition_A/index.html' }
         ],
         3: [
-          { id: 'C', title: 'Condition C', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_C/index.html' },
-          { id: 'D', title: 'Condition D', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_D/index.html' },
-          { id: 'A', title: 'Condition A', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_A/index.html' },
-          { id: 'B', title: 'Condition B', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_B/index.html' }
+          { id: 'C', title: 'Condition C', link: basePath + 'condition_C/index.html' },
+          { id: 'D', title: 'Condition D', link: basePath + 'condition_D/index.html' },
+          { id: 'A', title: 'Condition A', link: basePath + 'condition_A/index.html' },
+          { id: 'B', title: 'Condition B', link: basePath + 'condition_B/index.html' }
         ],
         4: [
-          { id: 'D', title: 'Condition D', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_D/index.html' },
-          { id: 'A', title: 'Condition A', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_A/index.html' },
-          { id: 'B', title: 'Condition B', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_B/index.html' },
-          { id: 'C', title: 'Condition C', link: '/Spatial-Audio-HRTF-Comparative-Study/condition_C/index.html' }
+          { id: 'D', title: 'Condition D', link: basePath + 'condition_D/index.html' },
+          { id: 'A', title: 'Condition A', link: basePath + 'condition_A/index.html' },
+          { id: 'B', title: 'Condition B', link: basePath + 'condition_B/index.html' },
+          { id: 'C', title: 'Condition C', link: basePath + 'condition_C/index.html' }
         ]
       };
       
