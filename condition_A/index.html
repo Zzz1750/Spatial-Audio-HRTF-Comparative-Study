@@ -546,7 +546,7 @@
  </a-entity>
 
  <!-- scene4 Button -->
-  <a-entity rotation="0 90 90" position="-5 1 0.6" id="to_scene5" visible="false"> 
+  <a-entity rotation="0 90 90" position="-8 0 0.5" id="to_scene5" visible="false"> 
       <a-circle class="clickable" color="white" radius="0" material="opacity: 0.9; transparent: true" id="scene5_circle"></a-circle> 
       <a-plane class="clickable" src="../images/arrow_model2.png" width="0." height="0" transparent="true" position="0 0 0.01" material="opacity: 0.8; shader: flat" id="scene5_Bplane"> </a-plane> 
   </a-entity>
@@ -568,7 +568,7 @@
       scene.setAttribute('visible','true')
       if (scene) {
         scene.enterVR();
-        functions.scene2();
+        functions.wait_time_vr();
       }
     }
     else{
@@ -601,6 +601,7 @@
         document.getElementById('name_page_div2').style.display='block'
       })
 
+  
       
    </script>
 
@@ -994,6 +995,10 @@
    function to_scene4(){
     functions.scene4();
    }
+
+    to_scene4.addEventListener('click',()=>{
+    functions.scene5();
+    })
 
   </script>
 
