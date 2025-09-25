@@ -71,7 +71,7 @@
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     position: absolute;
     top: 5%;
-    left: 16%;
+    left: 10%;
     font-size: 2rem;
     transform: translate(-50%, -50%);
   }
@@ -152,8 +152,8 @@
     
     
     <div id="name_page_div1" style="display:none;">
-      <p id="instruction_heading">Please sit comfortably and face forward. Focus straight ahead and listen carefully.<br> <span style="background-color: white; color:black; padding: 0px 5px;">Follow only the audio cues for exploration and head movement during the experiment.</span></p>
-      <span id="checkbox_sys"><input type="checkbox" id="myCheckbox">I accept the above rules</span>
+      <p id="instruction_heading">Please sit comfortably and face forward. <br> Focus straight ahead and listen carefully.<br> <span style="background-color: white; color:black; padding: 0px 5px;">Follow only the audio cues for exploration and head movement during the experiment.</span></p>
+      <span id="checkbox_sys"><input type="checkbox" id="myCheckbox">I accept </span>
       <button id="to_name_page_div2" style="display: none;">NEXT</button>
     </div>
 
@@ -695,7 +695,7 @@
       scene.setAttribute('visible','true')
       if (scene) {
         scene.enterVR();
-        functions.scene7();
+        functions.wait_time_vr();
       }
     }
     else{
