@@ -411,7 +411,66 @@
         color="white"></a-text>
      </a-entity>
 
-     
+
+
+     <!-- scene 5 -->
+     <a-entity id="question_scene5" position="0 3 -8" visible="false">
+      <a-plane
+        id="question_scene5_plane"
+        color="white" 
+        width="0" 
+        height="0"></a-plane>
+      
+      <a-text
+        value="How far away did the doorway narration sound " 
+        align="center" 
+        color="black"></a-text>
+  
+     </a-entity>
+
+      <a-entity id="option1_scene5" position="0 2 -8" visible="false" class="clickable">
+      <a-plane
+        id="option1_scene5_plane"
+        color="gray" 
+        width="0" 
+        height="0" 
+        class="clickable"></a-plane>
+      
+      <a-text
+        value="Near" 
+        position="-2 0 0" 
+        color="white"></a-text>
+     </a-entity>
+
+
+     <a-entity id="option2_scene5" position="0 1.3 -8" visible="false" class="clickable">
+      <a-plane
+        id="option2_scene5_plane"
+        color="gray" 
+        width="0" 
+        height="0"
+        class="clickable"></a-plane>
+      
+      <a-text
+        value="Medium" 
+        position="-2 0 0" 
+        color="white"></a-text>
+     </a-entity>
+
+
+     <a-entity id="option3_scene5" position="0 0.6 -8" visible="false" class="clickable">
+      <a-plane
+        id="option3_scene5_plane"
+        color="gray" 
+        width="0" 
+        height="0"
+        class="clickable"></a-plane>
+      
+      <a-text
+        value="Far" 
+        position="-2 0 0" 
+        color="white"></a-text>
+     </a-entity>
 
      
 
@@ -535,6 +594,11 @@
       position="-10.486 0.391 1">
     </a-entity>
 
+     <!-- scene6 Audio -->
+    <a-entity id="scene6_audio"
+      sound="src: url(../audio/audio6.wav); autoplay: false; positional: false;">
+    </a-entity>
+
   <!-- Sky with Sphere -->
   <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 20" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
   
@@ -568,7 +632,7 @@
       scene.setAttribute('visible','true')
       if (scene) {
         scene.enterVR();
-        functions.scene2();
+        functions.wait_time_vr();
       }
     }
     else{
@@ -626,6 +690,20 @@
     const option1_scene3_plane = document.getElementById('option1_scene3_plane');
     const option2_scene3_plane = document.getElementById('option2_scene3_plane');
     const option3_scene3_plane = document.getElementById('option3_scene3_plane');
+
+
+    const question_scene5 = document.getElementById('question_scene5');
+    const option1_scene5 = document.getElementById('option1_scene5');
+    const option2_scene5 = document.getElementById('option2_scene5');
+    const option3_scene5 = document.getElementById('option3_scene5');
+    var answer_scene5 ='';
+
+    const question_scene5_plane = document.getElementById('question_scene5_plane');
+    const option1_scene5_plane = document.getElementById('option1_scene5_plane');
+    const option2_scene5_plane = document.getElementById('option2_scene5_plane');
+    const option3_scene5_plane = document.getElementById('option3_scene5_plane');
+
+    
     
 
     const elephant_reaction = document.getElementById('elephant_reaction');
@@ -645,7 +723,11 @@
 
     const to_scene5 = document.getElementById('to_scene5');
     const scene5_circle =document.getElementById('scene5_circle');
-    const scene5_Bplane = document.getElementById('scene5_Bplane')
+    const scene5_Bplane = document.getElementById('scene5_Bplane');
+
+    const scene2_circle = document.getElementById('scene2_circle');
+    const scene2_Bplane = document.getElementById('scene2_Bplane');
+
 
     var reaction_time_elephant = 0;
     var reaction_time_pillar = 0;
@@ -686,10 +768,7 @@
 
 
       scene2: function () {
-        //main_audio_vr.play();
-
-        const scene2_circle = document.getElementById('scene2_circle');
-        const scene2_Bplane = document.getElementById('scene2_Bplane');
+        main_audio_vr.play();
 
         //General Sky
         skySphere.setAttribute('material', 'src: ../images/1.webp; shader: flat; side: back');
@@ -776,12 +855,9 @@
 
 
 
-
-
-
     scene3: function(){
       //General Sky
-      skySphere.setAttribute('material', 'src: ../images/question1.webp; shader: flat; side: back');
+      skySphere.setAttribute('material', 'src: ../images/wait_vr.webp; shader: flat; side: back');
 
       door_audio.components.sound.pauseSound();
 
@@ -935,8 +1011,108 @@
     },
 
     scene5: function(){
-      skySphere.setAttribute('material', 'src: ../images/4.webp; shader: flat; side: back');
+      skySphere.setAttribute('material', 'src: ../images/wait_vr.webp; shader: flat; side: back');
 
+      //prev components
+      chandlier_plane.setAttribute('visible','false');
+      chandlier_plane_dummy_1.setAttribute('visible','false');
+      chandlier_plane_dummy_2.setAttribute('visible','false');
+
+      chandlier_plane.setAttribute('width','0')
+      chandlier_plane.setAttribute('height','0')
+
+      chandlier_plane_dummy_1.setAttribute('width','0')
+      chandlier_plane_dummy_1.setAttribute('height','0')
+
+      chandlier_plane_dummy_2.setAttribute('width','0')
+      chandlier_plane_dummy_2.setAttribute('height','0')
+
+      chandlier_gaze_text.setAttribute('visible','false')
+      chandlier_reaction.setAttribute('visible','false')
+      chandlier_nav_text.setAttribute('visible','false')
+
+      scene5_circle.setAttribute('radius','0')
+      scene5_Bplane.setAttribute('width','0')
+      scene5_Bplane.setAttribute('height','0')
+    
+      to_scene5.setAttribute('visible', 'false')
+
+      //a-plane components
+      question_scene5.setAttribute('visible','true')
+      option1_scene5.setAttribute('visible','true')
+      option2_scene5.setAttribute('visible','true')
+      option3_scene5.setAttribute('visible','true')
+
+      question_scene5_plane.setAttribute('width','4.8')
+      question_scene5_plane.setAttribute('height','0.5')
+
+      option1_scene5_plane.setAttribute('width','4.8')
+      option1_scene5_plane.setAttribute('height','0.5')
+
+      option2_scene5_plane.setAttribute('width','4.8')
+      option2_scene5_plane.setAttribute('height','0.5')
+
+      option3_scene5_plane.setAttribute('width','4.8')
+      option3_scene5_plane.setAttribute('height','0.5')
+      
+
+      option1_scene5.addEventListener('mouseenter', () => {
+        option1_scene5_plane.setAttribute('color', '#f7b968');
+      });
+
+      option1_scene5.addEventListener('mouseleave', () => {
+        option1_scene5_plane.setAttribute('color', 'gray');
+      });
+      
+      option2_scene5.addEventListener('mouseenter', () => {
+        option2_scene5_plane.setAttribute('color', '#f7b968');
+      });
+
+      option2_scene5.addEventListener('mouseleave', () => {
+        option2_scene5_plane.setAttribute('color', 'gray');
+      });
+
+      option3_scene5.addEventListener('mouseenter', () => {
+        option3_scene5_plane.setAttribute('color', '#f7b968');
+      });
+
+      option3_scene5.addEventListener('mouseleave', () => {
+        option3_scene5_plane.setAttribute('color', 'gray');
+      });
+      
+      check_scene5_questions();
+    },
+
+
+    scene6: function(){
+      skySphere.setAttribute('material', 'src: ../images/4.webp; shader: flat; side: back');
+      const scene6_audio = document.getElementById('scene6_audio');
+      last_door_audio.components.sound.pauseSound();
+
+      setTimeout(()=>{
+        scene6_audio.components.sound.playSound();
+      },2000)
+      
+      question_scene5.setAttribute('visible','false')
+      option1_scene5.setAttribute('visible','false')
+      option2_scene5.setAttribute('visible','false')
+      option3_scene5.setAttribute('visible','false')
+
+      question_scene5_plane.setAttribute('width','0')
+      question_scene5_plane.setAttribute('height','0')
+
+      option1_scene5_plane.setAttribute('width','0')
+      option1_scene5_plane.setAttribute('height','0')
+
+      option2_scene5_plane.setAttribute('width','0')
+      option2_scene5_plane.setAttribute('height','0')
+
+      option3_scene5_plane.setAttribute('width','0')
+      option3_scene5_plane.setAttribute('height','0')   
+    },
+
+    scene7: function(){
+      skySphere.setAttribute('material', 'src: ../images/4.webp; shader: flat; side: back');
     }
     };
 
@@ -990,6 +1166,23 @@
     })
   }
 
+  function check_scene5_questions(){
+    option1_scene5.addEventListener('click',()=>{
+      answer_scene5 = 'Near'
+      to_scene6();
+    })
+
+    option2_scene5.addEventListener('click',()=>{
+      answer_scene5 = 'Medium'
+      to_scene6();
+    })
+
+    option3_scene5.addEventListener('click',()=>{
+      answer_scene5 = 'Far'
+      to_scene6();
+    })
+  }
+
 
   //scene controler
    to_scene2.addEventListener('click',()=>{
@@ -1003,7 +1196,10 @@
    to_scene5.addEventListener('click',()=>{
     functions.scene5();
    })
-
+ 
+   function to_scene6(){
+    functions.scene6();
+   }
   </script>
 
 
