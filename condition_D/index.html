@@ -652,7 +652,7 @@
      <!-- scene6 Audio -->
     <a-entity id="scene6_audio"
       sound="src: url(../audio/audio6.wav); autoplay: false; positional: true;"
-      position="-2 0 0">
+      position="-2 2 -5">
     </a-entity>
 
   <!-- Sky with Sphere -->
@@ -696,7 +696,7 @@
       scene.setAttribute('visible','true')
       if (scene) {
         scene.enterVR();
-        functions.wait_time_vr();
+        functions.scene6();
       }
     }
     else{
