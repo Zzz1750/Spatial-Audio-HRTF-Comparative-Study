@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Condition A</title>
+  <title>Condition D</title>
   <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
 </head>
 <style>
@@ -142,22 +142,22 @@
 <body>
   <div id="name_page">
     
-    <h1 id="condition_name">Condition B - HRTF 1</h1>
+    <h1 id="condition_name">Condition D</h1>
     <img src="../images/name_page.webp" id="main_back_image" alt="">
 
-    <div id="name_page_div0" style="display: none;">
+    <div id="name_page_div0" style="display: block;">
       <h1 id="main_welcome_name_page">Welcome to the Research </h1>
       <button id="main_welcome_button">NEXT</button>
     </div>
     
     
     <div id="name_page_div1" style="display:none;">
-      <p id="instruction_heading">This condition uses HRTF-1 with head tracking disabled. Please keep your head facing forward <br> <span style="background-color: white; color:black; padding: 0px 5px;">do not explore the content</span>  <br>Focus only on the audio for this Condition.</p>
+      <p id="instruction_heading">Please sit comfortably and face forward. Focus straight ahead and listen carefully.<br> <span style="background-color: white; color:black; padding: 0px 5px;">Follow only the audio cues for exploration and head movement during the experiment.</span></p>
       <span id="checkbox_sys"><input type="checkbox" id="myCheckbox">I accept the above rules</span>
       <button id="to_name_page_div2" style="display: none;">NEXT</button>
     </div>
 
-     <div id="name_page_div2" style="display: block;">
+     <div id="name_page_div2" style="display: none;">
         <label for="name_page_data" id="name_page_label">Participant ID: </label>
         <input type="text" id="name_page_data" name="name_page_data">
         <button id="enter-vr-btn">Enter VR</button>
@@ -690,7 +690,7 @@
 
     enter_vr_btn.addEventListener("click", function () {
     var name_page_data = document.getElementById('name_page_data').value;
-    if (name_page_data == ''){
+    if (name_page_data != ''){
       name_page.style.display='none';
       scene.setAttribute('visible','true')
       if (scene) {
