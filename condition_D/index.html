@@ -889,7 +889,7 @@
         setTimeout(() => {
           elephant_audio.components.sound.playSound();
 
-          check_reaction_time(25000, elephant_plane, (time) => { 
+          check_reaction_time(20000, elephant_plane, (time) => { 
             reaction_time_elephant = time;
             elephant_reaction.setAttribute('value', ` Elephant Reaction: ${reaction_time_elephant}s`);
           });
@@ -908,24 +908,24 @@
           pillar_audio.components.sound.playSound();
 
         
-          check_reaction_time(17000, left_pillar_plane, (time) => {
+          check_reaction_time(12000, left_pillar_plane, (time) => {
             reaction_time_pillar = time;
             pillar_reaction.setAttribute('value', `Pillar Reaction: ${reaction_time_pillar}s`);
           });
 
-          check_dummy_wins(left_pillar_plane, left_pillar_dummy_plane, 15000).then(result => {
+          check_dummy_wins(left_pillar_plane, left_pillar_dummy_plane, 12000).then(result => {
             pillar_nav = result;
             pillar_nav_text.setAttribute('value', `Pillar Nav: ${pillar_nav}`);
           });
 
-        }, 26000);
+        }, 23000);
 
 
         //audio 3 - ( Front Door )
         setTimeout(()=>{
           door_audio.components.sound.playSound();
           to_scene2.setAttribute('visible','true');
-        }, 43000)
+        }, 36000)
       },
 
 
@@ -1069,12 +1069,12 @@
         setTimeout(() => {
           chandlier_audio.components.sound.playSound();
 
-          check_reaction_time(22000, chandlier_plane, (time) => {
+          check_reaction_time(16000, chandlier_plane, (time) => {
             reaction_time_chandlier = time;
             chandlier_reaction.setAttribute('value', `Chandlier Reaction: ${reaction_time_chandlier}s`);
           });
 
-          check_dummy_wins_three(chandlier_plane, chandlier_plane_dummy_1, chandlier_plane_dummy_2, 20000)
+          check_dummy_wins_three(chandlier_plane, chandlier_plane_dummy_1, chandlier_plane_dummy_2, 16000)
           .then(result => {
             chandlier_nav = result;
             chandlier_nav_text.setAttribute('value', `Chandelier Reaction: ${chandlier_nav}`);
@@ -1086,7 +1086,7 @@
         setTimeout(()=>{
           last_door_audio.components.sound.playSound();
           to_scene5.setAttribute('visible', 'true')
-        }, 25000)
+        }, 17000)
 
     },
 
