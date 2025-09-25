@@ -640,6 +640,13 @@
     const chandlier_reaction = document.getElementById('chandlier_reaction');
 
 
+    const chandlier_audio = document.getElementById('chandlier_audio');
+    const last_door_audio = document.getElementById('last_door_audio');
+
+    const to_scene5 = document.getElementById('to_scene5');
+    const scene5_circle =document.getElementById('scene5_circle');
+    const scene5_Bplane = document.getElementById('scene5_Bplane')
+
     var reaction_time_elephant = 0;
     var reaction_time_pillar = 0;
     var reaction_time_chandlier = 0;
@@ -861,13 +868,6 @@
       //General Sky
       skySphere.setAttribute('material', 'src: ../images/3.webp; shader: flat; side: back');
 
-      const chandlier_audio = document.getElementById('chandlier_audio');
-      const last_door_audio = document.getElementById('last_door_audio');
-
-      const to_scene5 = document.getElementById('to_scene5');
-      const scene5_circle =document.getElementById('scene5_circle');
-      const scene5_Bplane = document.getElementById('scene5_Bplane')
-
       //prev components
       question_scene3.setAttribute('visible','false')
        option1_scene3.setAttribute('visible','false')
@@ -932,6 +932,11 @@
           to_scene5.setAttribute('visible', 'true')
         }, 25000)
 
+    },
+
+    scene5: function(){
+      skySphere.setAttribute('material', 'src: ../images/4.webp; shader: flat; side: back');
+
     }
     };
 
@@ -995,6 +1000,9 @@
     functions.scene4();
    }
 
+   to_scene5.addEventListener('click',()=>{
+    functions.scene5();
+   })
 
   </script>
 
