@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    
+</head>
+<body>
+    <h1>Redirecting</h1>
+
+    <script>
+        let countdown = 5;
+        
+        const timer = setInterval(() => {
+            countdown--;
+            
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.close();
+                
+                setTimeout(() => {
+                    if (!window.closed) {
+                        window.history.back();
+                    }
+                }, 1000);
+            }
+        }, 1000);
+        
+        document.body.addEventListener('click', () => {
+            window.close();
+        });
+    </script>
+</body>
+</html>
