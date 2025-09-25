@@ -145,7 +145,7 @@
     <h1 id="condition_name">Condition B - HRTF 1</h1>
     <img src="../images/name_page.webp" id="main_back_image" alt="">
 
-    <div id="name_page_div0" style="display: block;">
+    <div id="name_page_div0" style="display: none;">
       <h1 id="main_welcome_name_page">Welcome to the Research </h1>
       <button id="main_welcome_button">NEXT</button>
     </div>
@@ -157,7 +157,7 @@
       <button id="to_name_page_div2" style="display: none;">NEXT</button>
     </div>
 
-     <div id="name_page_div2" style="display: none;">
+     <div id="name_page_div2" style="display: block;">
         <label for="name_page_data" id="name_page_label">Participant ID: </label>
         <input type="text" id="name_page_data" name="name_page_data">
         <button id="enter-vr-btn">Enter VR</button>
@@ -310,8 +310,8 @@
     <a-plane id="chandlier_plane" 
         class="ray-target" 
         color="yellow" 
-        width="5" 
-        height="5" 
+        width="0" 
+        height="0" 
         position="0 9 -0.5"
         rotation="90 0 0"
         opacity= '0.8'
@@ -323,27 +323,31 @@
     <a-plane id="chandlier_plane_dummy_1" 
         class="ray-target" 
         color="red" 
-        width="3.5" 
-        height="3.5" 
-        position="0 7.8 -12"
-        rotation="10 0 0"
+        width="0" 
+        height="0" 
+        position="-13 8.5 0.3" 
+        rotation="10 90 0"
         opacity= '0.8'
         transparent = 'true'
         visible="false">
     </a-plane>
 
+    
+
     <!-- DUMMY 2 Chandlier Plane (target for raycast) -->
-    <a-plane id="chandlier_plane_dummy_1" 
+    <a-plane id="chandlier_plane_dummy_2" 
         class="ray-target" 
         color="red" 
-        width="3.5" 
-        height="3.5" 
-        position="0 9 12"
-        rotation="10 180 0"
+        width="0" 
+        height="0" 
+        position="12 10.93349 -0.40336" 
+        rotation="10 -90 0"
         opacity= '0.8'
         transparent = 'true'
         visible="false">
     </a-plane>
+
+    
 
     </a-plane>
     <!-- Questionnaire Section -->
@@ -469,6 +473,15 @@
         visible="false">
       </a-text>
 
+      <!-- Chandlier Gaze Text -->
+      <a-text id="chandlier_gaze_text" 
+        value="Chandelier Gaze: " 
+        position="-2 3.2 -3" 
+        align="center" 
+        color="yellow"
+        visible="false">
+      </a-text>
+
     </a-entity>
   
 
@@ -492,7 +505,13 @@
       position="-7 1.691 -0.341">
     </a-entity>
 
-    
+    <!-- Chandlier Audio -->
+    <a-entity id="chandlier_audio"
+      sound="src: url(../audio/audio4.wav); autoplay: false; positional: true;"
+      position="-0.3 5 0">
+    </a-entity>
+
+
   <!-- Sky with Sphere -->
   <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 20" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
   
@@ -519,7 +538,7 @@
       scene.setAttribute('visible','true')
       if (scene) {
         scene.enterVR();
-        functions.wait_time_vr();
+        functions.scene2();
       }
     }
     else{
@@ -668,12 +687,12 @@
         setTimeout(() => {
           elephant_audio.components.sound.playSound();
 
-          check_reaction_time(12000, elephant_plane, (time) => { 
+          check_reaction_time(25000, elephant_plane, (time) => { 
             reaction_time_elephant = time;
             elephant_reaction.setAttribute('value', ` Elephant Reaction: ${reaction_time_elephant}s`);
           });
 
-         check_dummy_wins(elephant_plane, elephant_dummy_plane, 10000).then(result => {
+         check_dummy_wins(elephant_plane, elephant_dummy_plane, 20000).then(result => {
             elephant_nav = result;
             elephant_nav_text.setAttribute('value', `Elephant Nav: ${elephant_nav}`);
           });
@@ -687,24 +706,24 @@
           pillar_audio.components.sound.playSound();
 
         
-          check_reaction_time(16000, left_pillar_plane, (time) => {
+          check_reaction_time(17000, left_pillar_plane, (time) => {
             reaction_time_pillar = time;
             pillar_reaction.setAttribute('value', `Pillar Reaction: ${reaction_time_pillar}s`);
           });
 
-          check_dummy_wins(left_pillar_plane, left_pillar_dummy_plane, 10000).then(result => {
+          check_dummy_wins(left_pillar_plane, left_pillar_dummy_plane, 15000).then(result => {
             pillar_nav = result;
             pillar_nav_text.setAttribute('value', `Pillar Nav: ${pillar_nav}`);
           });
 
-        }, 13000);
+        }, 26000);
 
 
         //audio 3 - ( Front Door )
         setTimeout(()=>{
           door_audio.components.sound.playSound();
           to_scene2.setAttribute('visible','true');
-        }, 23000)
+        }, 43000)
       },
 
 
@@ -715,6 +734,8 @@
     scene3: function(){
       //General Sky
       skySphere.setAttribute('material', 'src: ../images/question1.webp; shader: flat; side: back');
+
+      door_audio.components.sound.pauseSound();
 
       //prev components
         left_pillar_plane.setAttribute('visible','false')
@@ -796,6 +817,8 @@
       //General Sky
       skySphere.setAttribute('material', 'src: ../images/3.webp; shader: flat; side: back');
 
+      const chandlier_audio = document.getElementById('chandlier_audio')
+
       //prev components
       question_scene3.setAttribute('visible','false')
        option1_scene3.setAttribute('visible','false')
@@ -815,7 +838,27 @@
         option3_scene3_plane.setAttribute('height','0')
 
         //a-plane components
-        chandlier_plane.setAttribute('visible','true')
+        chandlier_plane.setAttribute('visible','true');
+        chandlier_plane_dummy_1.setAttribute('visible','true');
+        chandlier_plane_dummy_2.setAttribute('visible','true');
+
+        chandlier_plane.setAttribute('width','5')
+        chandlier_plane.setAttribute('height','5')
+
+        chandlier_plane_dummy_1.setAttribute('width','3.5')
+        chandlier_plane_dummy_1.setAttribute('height','3.5')
+
+        chandlier_plane_dummy_2.setAttribute('width','3.5')
+        chandlier_plane_dummy_2.setAttribute('height','3.5')
+
+        chandlier_gaze_text.setAttribute('visible','true')
+
+        setTimeout(() => {
+          chandlier_audio.components.sound.playSound();
+        }, 2000); 
+
+
+
     }
     };
 
@@ -886,7 +929,8 @@
  <script>
   const gazeData = {
     leftPillar: { time: 0 },
-    elephant: { time: 0 }
+    elephant: { time: 0 },
+    chandlier: { time: 0 }
   };
 
   let startTime = null;
@@ -906,6 +950,7 @@
 
   const pillar_text = document.getElementById('pillar_text');
   const elephant_text = document.getElementById('elephant_text');
+  const chandlier_gaze_text = document.getElementById('chandlier_gaze_text');
 
   const left_pillar_plane = document.getElementById('left_pillar_plane');
   const elephant_plane = document.getElementById('elephantt_plane');
@@ -923,6 +968,14 @@
   elephant_plane.addEventListener('mouseleave', () => {
     gaze_calculator_exit(gazeData.elephant, 'time', elephant_text);
   });
+
+  chandlier_plane.addEventListener('mouseenter', ()=> {
+    gaze_calculator_enter();
+  });
+
+  chandlier_plane.addEventListener('mouseleave', ()=>{
+    gaze_calculator_exit(gazeData.chandlier, 'time', chandlier_gaze_text);
+  })
 </script>
 
 

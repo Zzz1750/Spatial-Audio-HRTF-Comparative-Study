@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+</head>
+<body style="margin:0; overflow:hidden;">
+
+  <button id="playBtn" 
+          style="position:absolute; top:20px; left:20px; z-index:999; padding:10px 20px; font-size:16px;">
+    Enter VR
+  </button>
+
+  <a-scene id="scene">
+    <a-entity id="camera-rig" position="0 -3 0" rotation="0 90 0">
+      <a-camera fov="90"></a-camera>
+    </a-entity>
+
+    <a-sky src="./images/1.webp"></a-sky>
+
+    <a-entity id="elephant_audio"
+      sound="src: url(./audio/audio1.wav); autoplay: false; loop: true; positional: false;">
+    </a-entity>
+  </a-scene>
+
+  <script>
+    const elephant_audio = document.getElementById('elephant_audio');
+    const scene = document.getElementById('scene');
+
+    document.getElementById('playBtn').addEventListener('click', () => {
+      scene.enterVR();
+
+      elephant_audio.components.sound.playSound();
+
+      document.getElementById('playBtn').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
