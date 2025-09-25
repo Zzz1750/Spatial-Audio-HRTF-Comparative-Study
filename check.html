@@ -21,20 +21,42 @@
     <a-sky src="./images/1.webp"></a-sky>
 
     <a-entity id="elephant_audio"
-      sound="src: url(./audio/audio1.wav); autoplay: false; loop: true; positional: false;">
+      sound="src: url(./audio/audio1.wav); autoplay: false; positional: false;">
     </a-entity>
+
+    <a-entity id="pillar_audio"
+      sound="src: url(./audio/audio2.wav); autoplay: false; positional: false;">
+    </a-entity>
+
+    <a-entity id="door_audio"
+      sound="src: url(./audio/audio3.wav); autoplay: false; positional: false;">
+    </a-entity>
+
   </a-scene>
 
   <script>
     const elephant_audio = document.getElementById('elephant_audio');
+    const pillar_audio = document.getElementById('pillar_audio');
+    const door_audio = document.getElementById('door_audio');
+
     const scene = document.getElementById('scene');
 
     document.getElementById('playBtn').addEventListener('click', () => {
       scene.enterVR();
-
-      elephant_audio.components.sound.playSound();
-
       document.getElementById('playBtn').style.display = 'none';
+
+      setTimeout(()=>{
+        elephant_audio.components.sound.playSound();
+
+        setTimeout(()=>{
+            pillar_audio.components.sound.playSound();
+
+            setTimeout(()=>{
+                door_audio.components.sound.playSound();
+            },8000)
+        },16000)
+      },2000);
+
     });
   </script>
 </body>
