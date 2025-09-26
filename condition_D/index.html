@@ -340,7 +340,7 @@
         color="red" 
         width="0" 
         height="0" 
-        position="12 10.93349 -0.40336" 
+        position="12 8.8 -0" 
         rotation="10 -90 0"
         opacity= '0.8'
         transparent = 'true'
@@ -656,7 +656,7 @@
     </a-entity>
 
   <!-- Sky with Sphere -->
-  <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 10" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
+  <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 20" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
   
 
   <!-- Scene2 Button -->
@@ -697,7 +697,7 @@
       scene.setAttribute('visible','true')
       if (scene) {
         scene.enterVR();
-        functions.scene2();
+        functions.wait_time_vr();
       }
     }
     else{
