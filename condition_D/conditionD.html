@@ -130,20 +130,28 @@
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     position: absolute;
     top: 5%;
-    left: 10%;
+    left: 11%;
     font-size: 2rem;
     transform: translate(-50%, -50%);
+  }
+  #instruction_main_heading{
+    position: absolute;
+    color: white;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.5rem;
   }
   #instruction_heading{
     color: white;
     position: absolute;
-    width: 50%;
     justify-content: center;
-    top: 35%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 1.2rem;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1rem;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     line-height: 2rem;
   }
   #to_name_page_div2{
@@ -166,7 +174,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 15;
-
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
   #checkbox_sys input[type="checkbox"] {
       width: 30px;
@@ -221,17 +229,18 @@
 
   <div id="name_page" style="display: none;">
 
-    <h1 id="condition_name">Condition D</h1>
+    <h1 id="condition_name">⁌ Condition D ⁍</h1>
     <img src="../images/name_page.webp" id="main_back_image" alt="">
 
     <div id="name_page_div0" style="display: none;">
-      <h1 id="main_welcome_name_page">Welcome to the Research </h1>
+      <h1 id="main_welcome_name_page">⦂ Welcome to the Research ⦂ </h1>
       <button id="main_welcome_button">NEXT</button>
     </div>
     
     
     <div id="name_page_div1" style="display:none;">
-      <p id="instruction_heading">Please sit comfortably and face forward. <br> Focus straight ahead and listen carefully.<br> <span style="background-color: white; color:black; padding: 0px 5px;">Follow only the audio cues for exploration and head movement during the experiment.</span></p>
+      <h1 id="instruction_main_heading">Instructions: </h1>
+      <p id="instruction_heading">⦾ Please sit comfortably and face forward. <br>⦾ Focus straight ahead and listen carefully.<br>⦾ Keep head forward; follow only audio cues.</p>
       <span id="checkbox_sys"><input type="checkbox" id="myCheckbox">I accept </span>
       <button id="to_name_page_div2" style="display: none;">NEXT</button>
     </div>
