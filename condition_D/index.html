@@ -145,7 +145,7 @@
     <h1 id="condition_name">Condition D</h1>
     <img src="../images/name_page.webp" id="main_back_image" alt="">
 
-    <div id="name_page_div0" style="display: block;">
+    <div id="name_page_div0" style="display: none;">
       <h1 id="main_welcome_name_page">Welcome to the Research </h1>
       <button id="main_welcome_button">NEXT</button>
     </div>
@@ -157,7 +157,7 @@
       <button id="to_name_page_div2" style="display: none;">NEXT</button>
     </div>
 
-     <div id="name_page_div2" style="display: none;">
+     <div id="name_page_div2" style="display: block;">
         <label for="name_page_data" id="name_page_label">Participant ID: </label>
         <input type="text" id="name_page_data" name="name_page_data">
         <button id="enter-vr-btn">Enter VR</button>
@@ -646,7 +646,7 @@
     <!-- last_door Audio -->
     <a-entity id="last_door_audio"
       sound="src: url(../audio/audio5.wav); autoplay: false; positional: true;"
-      position="-10.486 0.391 1">
+      position="-19 2 1">
     </a-entity>
 
      <!-- scene6 Audio -->
@@ -656,7 +656,7 @@
     </a-entity>
 
   <!-- Sky with Sphere -->
-  <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 20" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
+  <a-entity id="sky-sphere" geometry="primitive: sphere; radius: 10" material="shader: flat; side: back" scale="-1 1 1"></a-entity>
   
 
   <!-- Scene2 Button -->
@@ -684,19 +684,20 @@
   
   <!-- Enter VR -->
   <script>
+    let name_page_data = '';
     const name_page = document.getElementById('name_page')
     const enter_vr_btn = document.getElementById("enter-vr-btn")
     const scene = document.querySelector("a-scene");
     const intro_audio = document.getElementById('intro_audio');
 
     enter_vr_btn.addEventListener("click", function () {
-    var name_page_data = document.getElementById('name_page_data').value;
+    name_page_data = document.getElementById('name_page_data').value;
     if (name_page_data != ''){
       name_page.style.display='none';
       scene.setAttribute('visible','true')
       if (scene) {
         scene.enterVR();
-        functions.wait_time_vr(); //s
+        functions.scene2();
       }
     }
     else{
@@ -1092,6 +1093,7 @@
     },
 
     scene5: function(){
+
       skySphere.setAttribute('material', 'src: ../images/wait_vr.webp; shader: flat; side: back');
       main_audio_vr.play();
       //prev components
@@ -1196,15 +1198,16 @@
       option2_scene5_plane.setAttribute('height','0')
 
       option3_scene5_plane.setAttribute('width','0')
-      option3_scene5_plane.setAttribute('height','0')   
-    },
+      option3_scene5_plane.setAttribute('height','0') 
+      },
 
     scene7: function(){
+      
+      push_data();
+
       main_audio_vr.play();
       skySphere.setAttribute('material', 'src: ../images/5.webp; shader: flat; side: back');
       
-    
-
       scene6_audio.components.sound.pauseSound();
       
       to_scene7.setAttribute('visible','false')
@@ -1311,8 +1314,8 @@
     }
     
     setTimeout(() => {
-        window.location.href = 'hold.html';
-    }, 500);
+        window.location.href = 'hold_conditionD.html';
+    }, 100);
 });
   </script>
 
@@ -1475,5 +1478,55 @@
   }
 </script>
 
+
+<script>
+  function push_data(){
+
+    console.log(`Participant ID: ${name_page_data}`)
+
+    console.log(`Elephant Gaze: ${gazeData.elephant.time}`);
+    console.log(`Elephant Reaction: ${reaction_time_elephant}`);
+    console.log(`Elephant Navigation: ${elephant_nav}`);
+
+    console.log(`Pillar Gaze: ${gazeData.leftPillar.time}`);
+    console.log(`Pillar Reaction: ${reaction_time_pillar}`);
+    console.log(`Pillar Navigation: ${pillar_nav}`);
+
+    console.log(`Answer Scene3: ${answer_scene3}`) //door1 data
+    
+    console.log(`Chandlier Gaze: ${gazeData.chandlier.time}`);
+    console.log(`Chandlier Reaction: ${reaction_time_chandlier}`);
+    console.log(`Chandlier Navigation: ${chandlier_nav}`);
+
+    console.log(`Answer Scene5 ${answer_scene5}`); //door2 data
+
+    async function AddData(){
+        const response = await fetch("https://sheetdb.io/api/v1/9h6dbhc7vk5ig",{
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({
+                data:[
+                    { Participant_ID: name_page_data, 
+                      Elephant_Gaze: gazeData.elephant.time, Elephant_Reaction: reaction_time_elephant, Elephant_Nav: elephant_nav, 
+                      Pillar_Gaze: gazeData.leftPillar.time, Pillar_Reaction: reaction_time_pillar, Pillar_Nav: pillar_nav,
+                      Chandelier_Gaze: gazeData.chandlier.time, Chandelier_Reaction: reaction_time_chandlier, Chandelier_Nav: chandlier_nav,
+                      Door1_Answer: answer_scene3, Door2_Answer: answer_scene5
+                    }
+                ]
+            })
+          });
+
+          const result = await response.json();
+          console.log(result);
+
+        }
+
+        AddData();
+        
+
+  }
+</script>
 </body>
 </html>
