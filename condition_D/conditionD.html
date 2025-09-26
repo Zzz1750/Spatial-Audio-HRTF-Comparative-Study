@@ -730,7 +730,7 @@
 
      <!-- scene6 Audio -->
     <a-entity id="scene6_audio"
-      sound="src: url(/conditionD_audio/audio6.wav); autoplay: false; positional: true;"
+      sound="src: url(./conditionD_audio/audio6.wav); autoplay: false; positional: true;"
       position="-2 2 -5">
     </a-entity>
 
@@ -763,7 +763,6 @@
   
   <!-- Loading Script -->
   <script>
-    // List of all assets to preload
     const assetsToLoad = [
       // Images
       '../images/name_page.webp',
@@ -795,10 +794,8 @@
     const loadingScreen = document.getElementById('loading_screen');
     const namePage = document.getElementById('name_page');
 
-    // Function to load an asset
     function loadAsset(url) {
       return new Promise((resolve, reject) => {
-        // Determine if it's an image or audio file
         const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
         const isAudio = /\.(mp3|wav|ogg)$/i.test(url);
         
@@ -813,7 +810,7 @@
             console.warn(`Failed to load image: ${url}`);
             loadedAssets++;
             updateProgress();
-            resolve(url); // Resolve even if failed to not block the app
+            resolve(url);
           };
           img.src = url;
         } else if (isAudio) {
@@ -827,13 +824,11 @@
             console.warn(`Failed to load audio: ${url}`);
             loadedAssets++;
             updateProgress();
-            resolve(url); // Resolve even if failed to not block the app
+            resolve(url);
           });
           audio.src = url;
-          // Preload the audio
           audio.load();
         } else {
-          // For other file types, just count them as loaded
           loadedAssets++;
           updateProgress();
           resolve(url);
@@ -841,13 +836,11 @@
       });
     }
 
-    // Update progress bar and text
     function updateProgress() {
       const progress = (loadedAssets / totalAssets) * 100;
       progressBar.style.width = `${progress}%`;
       loadingText.textContent = `Loading Assets... ${loadedAssets}/${totalAssets}`;
       
-      // Update details with current asset being loaded
       if (loadedAssets < totalAssets) {
         const currentAsset = assetsToLoad[loadedAssets];
         const fileName = currentAsset.split('/').pop();
@@ -857,14 +850,12 @@
       }
     }
 
-    // Load all assets
     async function loadAllAssets() {
       const loadPromises = assetsToLoad.map(url => loadAsset(url));
       
       try {
         await Promise.all(loadPromises);
         
-        // All assets loaded, hide loading screen and show name page
         setTimeout(() => {
           loadingScreen.style.display = 'none';
           namePage.style.display = 'block';
@@ -872,7 +863,6 @@
         }, 500);
       } catch (error) {
         console.error('Error loading assets:', error);
-        // Even if there's an error, proceed after a delay
         setTimeout(() => {
           loadingScreen.style.display = 'none';
           namePage.style.display = 'block';
@@ -881,7 +871,6 @@
       }
     }
 
-    // Start loading when the page is ready
     document.addEventListener('DOMContentLoaded', loadAllAssets);
   </script>
 
@@ -973,11 +962,6 @@
     const option1_scene5_plane = document.getElementById('option1_scene5_plane');
     const option2_scene5_plane = document.getElementById('option2_scene5_plane');
     const option3_scene5_plane = document.getElementById('option3_scene5_plane');
-
-    
-
-    
-    
 
     const elephant_reaction = document.getElementById('elephant_reaction');
     const pillar_reaction = document.getElementById('pillar_reaction');
@@ -1293,7 +1277,9 @@
         //audio 5
         setTimeout(()=>{
           last_door_audio.components.sound.playSound();
-          to_scene5.setAttribute('visible', 'true')
+          setTimeout(()=>{
+            to_scene5.setAttribute('visible', 'true')
+          },3000)
         }, 17000)
 
     },
