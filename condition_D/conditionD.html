@@ -12,6 +12,65 @@
     background-color: black;
   }
 
+  /* Loading Screen Styles */
+  #loading_screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 20px;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .loading-text {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .loading-progress {
+    width: 300px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .loading-progress-bar {
+    height: 100%;
+    background-color: white;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  
+  .loading-details {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    max-width: 80%;
+  }
+
   #name_page{
     position: absolute;
     width: 100%;
@@ -140,8 +199,18 @@
 </style>
 
 <body>
-  <div id="name_page">
-    
+
+    <div id="loading_screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading Assets...</div>
+        <div class="loading-progress">
+            <div class="loading-progress-bar"></div>
+        </div>
+        <div class="loading-details">Preparing your immersive experience</div>
+    </div>
+
+  <div id="name_page" style="display: none;">
+
     <h1 id="condition_name">Condition D</h1>
     <img src="../images/name_page.webp" id="main_back_image" alt="">
 
@@ -157,7 +226,7 @@
       <button id="to_name_page_div2" style="display: none;">NEXT</button>
     </div>
 
-     <div id="name_page_div2" style="display: block;">
+     <div id="name_page_div2" style="display: none;">
         <label for="name_page_data" id="name_page_label">Participant ID: </label>
         <input type="text" id="name_page_data" name="name_page_data">
         <button id="enter-vr-btn">Enter VR</button>
@@ -682,6 +751,130 @@
 
   </a-scene>
   
+  <!-- Loading Script -->
+  <script>
+    // List of all assets to preload
+    const assetsToLoad = [
+      // Images
+      '../images/name_page.webp',
+      '../images/icon/3d_logo.jpg',
+      '../images/wait_vr.webp',
+      '../images/intro.webp',
+      '../images/1.jpg',
+      '../images/2.jpg',
+      '../images/3.jpg',
+      '../images/5.webp',
+      '../images/arrow_model2.png',
+      
+      // Audio files
+      '../audio/intro_new.mp3',
+      '../audio/question3_song.mp3',
+      '../audio/audio1.wav',
+      '../audio/audio2.wav',
+      '../audio/audio3.wav',
+      '../audio/audio4.wav',
+      '../audio/audio5.wav',
+      '../audio/audio6.wav'
+    ];
+
+    let loadedAssets = 0;
+    const totalAssets = assetsToLoad.length;
+    const progressBar = document.querySelector('.loading-progress-bar');
+    const loadingText = document.querySelector('.loading-text');
+    const loadingDetails = document.querySelector('.loading-details');
+    const loadingScreen = document.getElementById('loading_screen');
+    const namePage = document.getElementById('name_page');
+
+    // Function to load an asset
+    function loadAsset(url) {
+      return new Promise((resolve, reject) => {
+        // Determine if it's an image or audio file
+        const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
+        const isAudio = /\.(mp3|wav|ogg)$/i.test(url);
+        
+        if (isImage) {
+          const img = new Image();
+          img.onload = () => {
+            loadedAssets++;
+            updateProgress();
+            resolve(url);
+          };
+          img.onerror = () => {
+            console.warn(`Failed to load image: ${url}`);
+            loadedAssets++;
+            updateProgress();
+            resolve(url); // Resolve even if failed to not block the app
+          };
+          img.src = url;
+        } else if (isAudio) {
+          const audio = new Audio();
+          audio.addEventListener('loadeddata', () => {
+            loadedAssets++;
+            updateProgress();
+            resolve(url);
+          });
+          audio.addEventListener('error', () => {
+            console.warn(`Failed to load audio: ${url}`);
+            loadedAssets++;
+            updateProgress();
+            resolve(url); // Resolve even if failed to not block the app
+          });
+          audio.src = url;
+          // Preload the audio
+          audio.load();
+        } else {
+          // For other file types, just count them as loaded
+          loadedAssets++;
+          updateProgress();
+          resolve(url);
+        }
+      });
+    }
+
+    // Update progress bar and text
+    function updateProgress() {
+      const progress = (loadedAssets / totalAssets) * 100;
+      progressBar.style.width = `${progress}%`;
+      loadingText.textContent = `Loading Assets... ${loadedAssets}/${totalAssets}`;
+      
+      // Update details with current asset being loaded
+      if (loadedAssets < totalAssets) {
+        const currentAsset = assetsToLoad[loadedAssets];
+        const fileName = currentAsset.split('/').pop();
+        loadingDetails.textContent = `Loading: ${fileName}`;
+      } else {
+        loadingDetails.textContent = 'All assets loaded! Starting application...';
+      }
+    }
+
+    // Load all assets
+    async function loadAllAssets() {
+      const loadPromises = assetsToLoad.map(url => loadAsset(url));
+      
+      try {
+        await Promise.all(loadPromises);
+        
+        // All assets loaded, hide loading screen and show name page
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+          namePage.style.display = 'block';
+          document.getElementById('name_page_div0').style.display = 'block';
+        }, 500);
+      } catch (error) {
+        console.error('Error loading assets:', error);
+        // Even if there's an error, proceed after a delay
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+          namePage.style.display = 'block';
+          document.getElementById('name_page_div0').style.display = 'block';
+        }, 1000);
+      }
+    }
+
+    // Start loading when the page is ready
+    document.addEventListener('DOMContentLoaded', loadAllAssets);
+  </script>
+
   <!-- Enter VR -->
   <script>
     let name_page_data = '';
@@ -849,7 +1042,7 @@
       scene2: function () {
 
         //General Sky
-        skySphere.setAttribute('material', 'src: ../images/1.webp; shader: flat; side: back');
+        skySphere.setAttribute('material', 'src: ../images/1.jpg; shader: flat; side: back');
         
         //prev scene components
         intro_text.setAttribute('visible','false')
@@ -1027,7 +1220,7 @@
       main_audio_vr.currentTime = 0;
 
       //General Sky
-      skySphere.setAttribute('material', 'src: ../images/3.webp; shader: flat; side: back');
+      skySphere.setAttribute('material', 'src: ../images/2.jpg; shader: flat; side: back');
 
       //prev components
       question_scene3.setAttribute('visible','false')
@@ -1173,7 +1366,7 @@
     scene6: function(){
       main_audio_vr.pause();
       main_audio_vr.currentTime = 0;
-      skySphere.setAttribute('material', 'src: ../images/4.webp; shader: flat; side: back');
+      skySphere.setAttribute('material', 'src: ../images/3.jpg; shader: flat; side: back');
       const scene6_audio = document.getElementById('scene6_audio');
       last_door_audio.components.sound.pauseSound();
 
