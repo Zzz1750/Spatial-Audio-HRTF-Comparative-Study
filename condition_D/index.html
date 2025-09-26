@@ -388,8 +388,8 @@
             id="exit_button_plane"
             class="clickable"
             color="white" 
-            width="0.5" 
-            height="0.15" 
+            width="0" 
+            height="0" 
             opacity= '0.9'
             transparent = 'true'></a-plane>
           
@@ -805,6 +805,7 @@
 
     const conclusion_set = document.getElementById('conclusion_set');
     const exit_button = document.getElementById('exit_button');
+    const exit_button_plane = document.getElementById('exit_button_plane')
 
 
     var reaction_time_elephant = 0;
@@ -926,8 +927,10 @@
         //audio 3 - ( Front Door )
         setTimeout(()=>{
           door_audio.components.sound.playSound();
-          to_scene2.setAttribute('visible','true');
-        }, 36000)
+          setTimeout(()=>{
+            to_scene2.setAttribute('visible','true');
+          },10000);
+        }, 36000);
       },
 
 
@@ -1216,6 +1219,9 @@
       scene7_Bplane.setAttribute('height','0')
       
       conclusion_set.setAttribute('visible','true');
+
+      exit_button_plane.setAttribute('width','0.5')
+      exit_button_plane.setAttribute('height','0.15') 
     }
     };
 
