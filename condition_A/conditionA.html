@@ -488,6 +488,18 @@
             color="black"> 
             </a-text>
         </a-entity>
+
+         <a-plane 
+          position="0 1.36201 -2.03922" 
+          id="background_exit" 
+          color="black" 
+          width="0" 
+          height="0" 
+          opacity="0.9" 
+          transparent="true" 
+          material="opacity: 0.6" 
+          scale="0.45392 0.56354 1"></a-plane>
+
      </a-entity>
      
 
@@ -1406,6 +1418,11 @@
       },
 
     scene7: function(){
+
+      const background_exit = document.getElementById('background_exit');
+      background_exit.setAttribute('width','3');
+      background_exit.setAttribute('height','3')
+
       
       push_data();
 
