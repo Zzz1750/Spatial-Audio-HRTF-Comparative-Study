@@ -1687,7 +1687,22 @@
 
 
 <script>
+
+  function getCurrentDateTime() {
+    const now = new Date();
+    return now.toLocaleString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+  }
+
   function push_data(){
+
+    var currentDateTime = getCurrentDateTime();
 
     console.log(`Participant ID: ${name_page_data}`)
 
@@ -1719,7 +1734,7 @@
                       Elephant_Gaze: gazeData.elephant.time, Elephant_Reaction: reaction_time_elephant, Elephant_Nav: elephant_nav, 
                       Pillar_Gaze: gazeData.leftPillar.time, Pillar_Reaction: reaction_time_pillar, Pillar_Nav: pillar_nav,
                       Chandelier_Gaze: gazeData.chandlier.time, Chandelier_Reaction: reaction_time_chandlier, Chandelier_Nav: chandlier_nav,
-                      Door1_Answer: answer_scene3, Door2_Answer: answer_scene5
+                      Door1_Answer: answer_scene3, Door2_Answer: answer_scene5, Date_Time: currentDateTime
                     }
                 ]
             })

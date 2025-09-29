@@ -718,37 +718,37 @@
 
     <!-- Elephant Audio -->
     <a-entity id="elephant_audio"
-      sound="src: url(./conditionD_audio/audio1.wav); autoplay: false; positional: true;"
+      sound="src: url(./conditionD_audio/audio1.wav); autoplay: false; positional: true; volume: 10;"
       position="-11.48137 -1.3207 -4.07978">
     </a-entity>
 
     <!-- Pillar Audio -->
     <a-entity id="pillar_audio"
-      sound="src: url(./conditionD_audio/audio2.wav); autoplay: false; positional: true;"
+      sound="src: url(./conditionD_audio/audio2.wav); autoplay: false; positional: true; volume: 8;"
       position="-3.87222 3.53034 5.88735">
     </a-entity>
 
     <!-- Door Audio -->
     <a-entity id="door_audio"
-      sound="src: url(./conditionD_audio/audio3.wav); autoplay: false; positional: true;"
+      sound="src: url(./conditionD_audio/audio3.wav); autoplay: false; positional: true; volume: 10;"
       position="-17 1.691 -0.341">
     </a-entity>
 
     <!-- Chandlier Audio -->
     <a-entity id="chandlier_audio"
-      sound="src: url(./conditionD_audio/audio4.wav); autoplay: false; positional: true;"
+      sound="src: url(./conditionD_audio/audio4.wav); autoplay: false; positional: true; volume: 10;"
       position="-0.3 5 0">
     </a-entity>
 
     <!-- last_door Audio -->
     <a-entity id="last_door_audio"
-      sound="src: url(./conditionD_audio/audio5.wav); autoplay: false; positional: true;"
+      sound="src: url(./conditionD_audio/audio5.wav); autoplay: false; positional: true; volume: 10;"
       position="-19 2 1">
     </a-entity>
 
      <!-- scene6 Audio -->
     <a-entity id="scene6_audio"
-      sound="src: url(./conditionD_audio/audio6.wav); autoplay: false; positional: true;"
+      sound="src: url(./conditionD_audio/audio6.wav); autoplay: false; positional: true; volume: 5;"
       position="-2 2 -5">
     </a-entity>
 
@@ -907,7 +907,7 @@
       scene.setAttribute('visible','true')
       if (scene) {
         scene.enterVR();
-        functions.wait_time_vr();
+        functions.scene6();
       }
     }
     else{
@@ -1693,7 +1693,20 @@
 
 
 <script>
+  function getCurrentDateTime() {
+    const now = new Date();
+    return now.toLocaleString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+  }
   function push_data(){
+
+    var currentDateTime = getCurrentDateTime();
 
     console.log(`Participant ID: ${name_page_data}`)
 
@@ -1725,7 +1738,7 @@
                       Elephant_Gaze: gazeData.elephant.time, Elephant_Reaction: reaction_time_elephant, Elephant_Nav: elephant_nav, 
                       Pillar_Gaze: gazeData.leftPillar.time, Pillar_Reaction: reaction_time_pillar, Pillar_Nav: pillar_nav,
                       Chandelier_Gaze: gazeData.chandlier.time, Chandelier_Reaction: reaction_time_chandlier, Chandelier_Nav: chandlier_nav,
-                      Door1_Answer: answer_scene3, Door2_Answer: answer_scene5
+                      Door1_Answer: answer_scene3, Door2_Answer: answer_scene5, Date_Time: currentDateTime
                     }
                 ]
             })
