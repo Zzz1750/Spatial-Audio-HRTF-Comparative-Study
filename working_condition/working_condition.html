@@ -519,7 +519,7 @@
         class="clickable"></a-plane>
       
       <a-text
-        value="Near" 
+        value="Near (felt within arm reach / <1 m)" 
         position="-2 0 0" 
         color="white"></a-text>
      </a-entity>
@@ -534,7 +534,7 @@
         class="clickable"></a-plane>
       
       <a-text
-        value="Medium" 
+        value="Far (felt beyond arm reach / >1 m)" 
         position="-2 0 0" 
         color="white"></a-text>
      </a-entity>
@@ -549,7 +549,7 @@
         class="clickable"></a-plane>
       
       <a-text
-        value="Far" 
+        value="Not Sure" 
         position="-2 0 0" 
         color="white"></a-text>
      </a-entity>
@@ -580,7 +580,7 @@
         class="clickable"></a-plane>
       
       <a-text
-        value="Near" 
+        value="Near (felt within arm reach / <1 m)" 
         position="-2 0 0" 
         color="white"></a-text>
      </a-entity>
@@ -595,7 +595,7 @@
         class="clickable"></a-plane>
       
       <a-text
-        value="Medium" 
+        value="Far (felt beyond arm reach / >1 m)" 
         position="-2 0 0" 
         color="white"></a-text>
      </a-entity>
@@ -610,7 +610,7 @@
         class="clickable"></a-plane>
       
       <a-text
-        value="Far" 
+        value="Not Sure" 
         position="-2 0 0" 
         color="white"></a-text>
      </a-entity>
@@ -892,7 +892,7 @@
       scene.setAttribute('visible','true')
       if (scene) {
         scene.enterVR();
-        functions.scene4();
+        functions.scene3();
       }
     }
     else{
@@ -1457,12 +1457,12 @@
     })
 
     option2_scene3.addEventListener('click',()=>{
-      answer_scene3 = 'Medium'
+      answer_scene3 = 'Far'
       to_scene4();
     })
 
     option3_scene3.addEventListener('click',()=>{
-      answer_scene3 = 'Far'
+      answer_scene3 = 'Not Sure'
       to_scene4();
     })
   }
@@ -1474,12 +1474,12 @@
     })
 
     option2_scene5.addEventListener('click',()=>{
-      answer_scene5 = 'Medium'
+      answer_scene5 = 'Far'
       to_scene6();
     })
 
     option3_scene5.addEventListener('click',()=>{
-      answer_scene5 = 'Far'
+      answer_scene5 = 'Not Sure'
       to_scene6();
     })
   }
