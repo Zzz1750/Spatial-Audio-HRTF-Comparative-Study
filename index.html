@@ -47,7 +47,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.7);
       z-index: -1;
     }
     
@@ -435,6 +435,19 @@
       font-size: 14px;
     }
     
+    #phase2{
+      margin-bottom: 100px;
+    }
+    #select_grp2{
+      padding: 10px 25px;
+      margin: 50px auto;
+      background-color: rgba(124, 124, 124, 0.195);
+      border: 2px solid white;
+      color: white;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
     /* Animations */
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -519,6 +532,17 @@
       <p id="sub_heading">This application is part of a research study exploring how immersive audio impacts  engagement in cultural-heritage environments. Using immersive 360° visuals of Saratha Vilas, a restored Chettinad mansion in Tamil Nadu, the experiment compares different audio conditions.
 You will experience four versions of the walkthrough, each with a different audio setup. To keep anonymity, these are simply labelled A, B, C, and D. Your gaze, reaction, and responses will help us understand how sound influences cultural learning and presence.</p>
       <button id="select_grp">Next</button>
+    </div>
+
+    <div id="phase2" style="display: none;">
+      <h1 id="phase2_header">Know About Saratha Vilas Chettinad Palace</h1>
+      <br><br>
+      <audio controls id="intro_about">
+      <source src="./audio/intro 1.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+    <br>
+    <button id="select_grp2">Next</button>
     </div>
     </header>
     
@@ -766,6 +790,12 @@ You will experience four versions of the walkthrough, each with a different audi
   <script>
    document.getElementById('select_grp').addEventListener('click',()=>{
       document.getElementById('phase1').style.display='none';
+      document.getElementById('phase2').style.display='block';
+    })
+
+    document.getElementById('select_grp2').addEventListener('click',()=>{
+      document.getElementById('phase2').style.display='none';
+      intro_about.pause();
       document.querySelector('.content-area').style.display='flex';
     })
   </script>
