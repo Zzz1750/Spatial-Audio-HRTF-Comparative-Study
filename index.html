@@ -110,11 +110,15 @@
       color: var(--primary-color);
       font-weight: 400;
       opacity: 0.9;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      text-align: left;
+      color: black;
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
     }
     
     .content-area {
-      display: flex;
+      display: none;
       flex-direction: column;
       width: 100%;
       max-width: 600px;
@@ -402,6 +406,17 @@
       animation: pulse 2s infinite;
       border: 1px solid rgba(39, 174, 96, 0.3);
     }
+
+    #select_grp{
+      padding: 10px 25px;
+      margin: 50px auto;
+      background-color: rgba(124, 124, 124, 0.195);
+      border: 2px solid white;
+      color: white;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
     
     .group-icon {
       font-size: 1.5rem;
@@ -498,8 +513,13 @@
 <body>
   <div class="container">
     <header>
-      <h1>Soundscapes of Chettinad</h1>
-      <p id="sub_heading">A Spatial-HRTF Comparative Study Exploring the Sonic Heritage of Tamil Nadu's Architectural Gem</p>
+      <div id="phase1">
+        <h1>Welcome to the Saratha Vilas VR Experiment</h1>
+      <br>
+      <p id="sub_heading">This application is part of a research study exploring how immersive audio impacts  engagement in cultural-heritage environments. Using immersive 360° visuals of Saratha Vilas, a restored Chettinad mansion in Tamil Nadu, the experiment compares different audio conditions.
+You will experience four versions of the walkthrough, each with a different audio setup. To keep anonymity, these are simply labelled A, B, C, and D. Your gaze, reaction, and responses will help us understand how sound influences cultural learning and presence.</p>
+      <button id="select_grp">Next</button>
+    </div>
     </header>
     
     <div class="content-area">
@@ -742,6 +762,12 @@
         progressPercent.textContent = `${Math.round(progress)}%`;
       }
     });
+  </script>
+  <script>
+   document.getElementById('select_grp').addEventListener('click',()=>{
+      document.getElementById('phase1').style.display='none';
+      document.querySelector('.content-area').style.display='flex';
+    })
   </script>
 </body>
 </html>
