@@ -240,8 +240,8 @@
     
     <div id="name_page_div1" style="display:none;">
       <h1 id="instruction_main_heading">Instructions: </h1>
-      <p id="instruction_heading">⦾ Please sit comfortably and face forward. <br>⦾ Focus straight ahead and listen carefully.<br>⦾ Keep head forward; follow only audio cues.</p>
-      <span id="checkbox_sys"><input type="checkbox" id="myCheckbox">I accept </span>
+      <p id="instruction_heading">⦾ Sit comfortably and face forward. <br>⦾ You will go through 4 versions of the same visuals. <br>⦾ The only difference is the audio format A, B, C, and D. <br>⦾ Wear headphones and follow audio cues</p>
+      <span id="checkbox_sys"><input type="checkbox" id="myCheckbox">I Understand & Agree</span>
       <button id="to_name_page_div2" style="display: none;">NEXT</button>
     </div>
 
@@ -892,7 +892,7 @@
       scene.setAttribute('visible','true')
       if (scene) {
         scene.enterVR();
-        functions.scene3();
+        functions.wait_time_vr();
       }
     }
     else{
