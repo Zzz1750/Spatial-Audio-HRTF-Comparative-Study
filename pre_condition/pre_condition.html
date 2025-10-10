@@ -40,7 +40,7 @@
        <a-text id="scene1_text1" color="white" value="Auditory Stimulus Response Test" width="4" position="-4 2 1.3" rotation="0 90 0" visible="false"></a-text>  
        
        <a-entity id="vr_instruction" visible="false">
-        <a-image id="logo" src="./images/info.webp" width="1" height="1" position="-4 2.2 0" rotation="0 90 0"></a-image>
+        <a-image id="logo" src="./images/info.webp" width="0.8" height="0.8" position="-4 2.2 0" rotation="0 90 0"></a-image>
         <a-text id="scene1_text1" color="white" value="Move your head for precise results" width="3" position="-4 1.7 1" rotation="0 90 0"></a-text>
        </a-entity>
        
@@ -135,7 +135,7 @@
     <!-- sky sphere - FIXED -->
     <a-sphere 
         id="sky"
-        radius="20"             
+        radius="10"             
         material="side: back; src: ./images/wait_vr.webp; shader: flat"
         position="0 0 0">
     </a-sphere>
@@ -151,7 +151,8 @@
                 id="cursor"
                 raycaster="objects: .ray-target; useWorldCoordinates: true"
                 fuse="false"
-                color="red">
+                geometry="primitive: ring; radiusInner: 0; radiusOuter: 0"
+                material="opacity: 0; transparent: true">
             </a-cursor>
         </a-entity>
     </a-entity>
