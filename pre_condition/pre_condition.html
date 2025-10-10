@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Pre Condition</title>
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <style>
+        body{
+            margin: 0;
+            background-color: black;
+            color: white;
+        }
+        #start_scene1{
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            z-index: 100;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>  
+
+    <audio src="./audio/intro.mp3" id="intro_audio"></audio>
+
+    <div id="intro_page" style="display: block;">
+        <button id="start_scene1">Click</button>
+    </div>
+
+
+    <a-scene cursor="rayOrigin: mouse" visible="false">
+    
+    <!-- scene1 -->
+    <a-entity id="scene1" visible="false" light="defaultLightsEnabled: false">
+
+       <a-image id="logo" src="./images/3d_logo.jpg" position="-4 2 0" rotation="0 90 0" visible="false"></a-image>
+       <a-text id="scene1_text1" color="white" value="Auditory Stimulus Response Test" width="5" position="-4 2 1.5" rotation="0 90 0" visible="false"></a-text>  
+       
+       <a-entity id="vr_instruction" visible="false">
+        <a-image id="logo" src="./images/info.webp" width="1.5" height="1.5" position="-4 2.8 0" rotation="0 90 0"></a-image>
+        <a-text id="scene1_text1" color="white" value="Move your head for precise results" width="4" position="-4 2 1.45" rotation="0 90 0"></a-text>
+       </a-entity>
+       
+        <a-text id="connecting_text" color="white" value="Connecting..." width="5" position="-4 2 0.5" rotation="0 90 0" visible="false" ></a-text>  
+
+        
+    </a-entity>
+
+
+    <!-- scene2 -->
+    <a-entity id="scene2" visible="false">
+
+        <!-- center plane -->
+        <a-plane 
+            id="center_plane" 
+            class="ray-target"
+            width="0.8" 
+            height="1.5" 
+            color="blue" 
+            position="-2 2 0" 
+            rotation="0 90 0"
+            material="opacity: 0.5; transparent: true;">
+        </a-plane>
+        
+        <!-- Left plane -->
+       <a-plane id="left_plane" class="ray-target" width="1.5" height="7" color="blue" position="-2 3 3" rotation="0 -25 0" material="opacity: 0.5; transparent: true; side: double;"></a-plane>
+
+        <!-- Right plane -->
+       <a-plane id="right_plane" class="ray-target" width="1.5" height="7" color="blue" position="-2 3 -3" rotation="0 25 0" material="opacity: 0.5; transparent: true; side: double;"></a-plane>
+         
+       <a-entity  position="-2 2 1.5" rotation="0 115 0" id="head_reseter1">
+           <a-text value="Look Here" color="white" width="2" position="-0.22 0.3 -0" rotation="0 -10 0"></a-text>
+            <a-entity >
+                <a-circle 
+                    color="white" 
+                    opacity="0.3"
+                    scale="0.2 0.2 0.2">
+                </a-circle>
+                
+                <a-ring 
+                    color="white" 
+                    radius-inner="0.45" 
+                    radius-outer="0.9"
+                    scale="0.2 0.2 0.2"
+                    position="0 0 0.001">
+                </a-ring>
+            </a-entity> 
+            <a-text value="1" color="white" width="3" position="-0.05325 0 0.00428"></a-text>        
+        </a-entity>
+
+
+        <a-entity  position="-2 2 -1.5" rotation="0 85 0" id="head_reseter2">
+           <a-text value="Look Here" color="white" width="2" position="-0.22 0.3 -0" rotation="0 -10 0"></a-text>
+            <a-entity >
+                <a-circle 
+                    color="white" 
+                    opacity="0.3"
+                    scale="0.2 0.2 0.2">
+                </a-circle>
+                
+                <a-ring 
+                    color="white" 
+                    radius-inner="0.45" 
+                    radius-outer="0.9"
+                    scale="0.2 0.2 0.2"
+                    position="0 0 0.001">
+                </a-ring>
+            </a-entity> 
+            <a-text value="2" color="white" width="3" position="-0.05325 0 0.00428"></a-text>        
+        </a-entity>
+
+        <a-entity  position="-2 2 0" rotation="0 90 0" id="head_reseter3">
+           <a-text value="Look Here" color="white" width="2" position="-0.22 0.3 -0" rotation="0 0 0"></a-text>
+            <a-entity >
+                <a-circle 
+                    color="white" 
+                    opacity="0.3"
+                    scale="0.2 0.2 0.2">
+                </a-circle>
+                
+                <a-ring 
+                    color="white" 
+                    radius-inner="0.45" 
+                    radius-outer="0.9"
+                    scale="0.2 0.2 0.2"
+                    position="0 0 0.001">
+                </a-ring>
+            </a-entity> 
+            <a-text value="3" color="white" width="3" position="-0.05325 0 0.00428"></a-text>        
+        </a-entity>
+       
+    </a-entity>
+    
+    <!-- sky -->
+    <a-entity>
+    <a-sphere 
+        id="sky"
+        radius="10"             
+        scale="-1 1 1"   
+        material="side: back"
+        position="0 1.6 0">
+    </a-sphere>
+    </a-entity>
+
+
+    <!-- camera rig -->
+    <a-entity id="rig" rotation="0 90 0">
+        <a-entity 
+            camera 
+            position="0 1.6 0"
+            look-controls 
+            wasd-controls>
+            <a-cursor
+                id="cursor"
+                raycaster="objects: .ray-target; useWorldCoordinates: true"
+                fuse="false"
+                color="red">
+            </a-cursor>
+        </a-entity>
+    </a-entity>
+
+    <!-- 3D audio  -->
+    <!-- headrester Audio 1 -->
+    <a-entity id="headreseter_audio1" sound="src: ./audio/tick.mp3; volume: 8" position="-1.74738 2.04865 1.33306"></a-entity>
+
+    </a-scene>
+
+    <script>
+        const center_plane = document.getElementById('center_plane');
+        const headreseter_audio1 = document.getElementById('headreseter_audio1');
+
+        const sky = document.getElementById('sky');
+        const scene = document.querySelector("a-scene");
+
+        const logo = document.getElementById('logo');
+        const scene1_text1 = document.getElementById('scene1_text1')
+        const intro_audio = document.getElementById('intro_audio');
+        const vr_instruction = document.getElementById('vr_instruction');
+        const connecting_text = document.getElementById('connecting_text');
+
+        function scene1(){
+            sky.setAttribute('src','./images/wait_vr.webp');
+
+            setTimeout(()=>{
+                logo.setAttribute('visible','true');
+                intro_audio.play();
+                
+                setTimeout(()=>{
+                    logo.setAttribute('visible','false')
+                    scene1_text1.setAttribute('visible','true')
+
+                    setTimeout(()=>{
+                        scene1_text1.setAttribute('visible','false');
+                        vr_instruction.setAttribute('visible','true');
+
+                        setTimeout(()=>{
+                            vr_instruction.setAttribute('visible','false');
+                            connecting_text.setAttribute('visible','true');
+                        }, 3000);
+                    }, 4000);
+                }, 4000);
+            }, 2000);
+        }
+       
+        function start_pre_condition(){
+            setTimeout(()=>{
+            headreseter_audio1.components.sound.playSound();
+            }, 2000);
+        }
+       
+
+        document.getElementById('start_scene1').addEventListener('click',()=>{
+            
+            document.getElementById('scene1').setAttribute('visible','true')
+            document.getElementById('intro_page').style.display='none';
+            scene.setAttribute('visible','true');
+            if (scene) {
+                scene.enterVR();
+                scene1();
+            }
+        })
+
+
+        
+    </script>
+</body>
+</html>
