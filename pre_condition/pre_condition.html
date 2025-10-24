@@ -70,7 +70,7 @@
     <a-entity id="scene2" visible="false">
 
         <!-- center plane -->
-       <a-circle id="center_plane" class="ray-target" width="0" height="0" position="-7 1.61674 -0.37636" rotation="0 90 0" color="white" material="opacity: 0.5; shader: flat; transparent: true" > </a-circle>
+       <a-plane id="center_plane" class="ray-target" width="0" height="0" position="-7 1.61674 -0.37636" rotation="0 90 0" color="white" material="opacity: 0.5; shader: flat; transparent: true" > </a-plane>
         
         <!-- Left plane -->
         <a-plane id="left_plane" class="ray-target" width="1.5" height="7" position="-2.7 2.5 4" rotation="0 -30 0" color="blue" material="opacity: 0.5; shader: flat; side: double; transparent: true" scale="1 1.3 1"></a-plane>
@@ -191,7 +191,7 @@
         });
 
         let audio_manager = 0;
-        let canPlay = true; 
+        let canPlay = false; 
 
         center_plane.addEventListener('mouseenter', () => {
             if (canPlay) {
