@@ -57,8 +57,7 @@
        <a-text id="scene1_text1" color="white" value="Auditory Stimulus Response Test" width="4" position="-4 2 1.3" rotation="0 90 0" visible="false"></a-text>  
        
        <a-entity id="vr_instruction" visible="false">
-        <a-image id="logo" src="./images/info.png" width="1" height="1" position="-4 2.2 0" rotation="0 90 0"></a-image>
-        <a-text id="scene1_text1" color="white" value="Write something here" width="3" position="-4 1.7 1" rotation="0 90 0"></a-text>
+        <a-text id="scene1_text1" color="white" value="Follow the Audio Cues" width="4" position="-4 2 1" rotation="0 90 0"></a-text>
        </a-entity>
        
         <a-text id="connecting_text" color="white" value="Connecting..." width="4" position="-4 2 0.5" rotation="0 90 0" visible="false" ></a-text>  
@@ -96,11 +95,13 @@
     
     <!-- sky sphere - FIXED -->
     <a-sphere 
-        id="sky"
-        radius="10"             
-        material="side: back; src: ./images/wait_vr.webp; shader: flat"
-        position="0 0 0">
+    id="sky"
+    radius="50"
+    material="side: back; src: ./images/wait_vr.webp; shader: flat; repeat: -1 1"
+    rotation="0 180 0"
+    position="0 0 0">
     </a-sphere>
+
 
     <!-- camera rig -->
     <a-entity id="rig" rotation="0 90 0">
@@ -174,7 +175,7 @@
         }
        
         function scene2(){
-            sky.setAttribute('material', 'src', './images/check2.png');
+            sky.setAttribute('material', 'src', './images/grid.webp');
             document.getElementById('scene2').setAttribute('visible','true');
             center_plane.setAttribute('width','2');
             center_plane.setAttribute('height','3');
